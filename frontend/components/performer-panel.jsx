@@ -62,11 +62,15 @@ export default class PerformerPanel extends React.Component {
           <span
             onTouchStart={this.handleTouchStart.bind(this)}
             onTouchEnd={this.handleTouchEnd.bind(this, 'next-section')}
+            onMouseDown={this.handleTouchStart.bind(this)}
+            onMouseUp={this.handleTouchEnd.bind(this, 'next-section')}
             className='performer-panel-section-index white'>{section}</span>
           <h1>Sequence</h1>
           <span
             onTouchStart={this.handleTouchStart.bind(this)}
             onTouchEnd={this.handleTouchEnd.bind(this, 'next-sequence')}
+            onMouseDown={this.handleTouchStart.bind(this)}
+            onMouseUp={this.handleTouchEnd.bind(this, 'next-section')}
             className='performer-panel-section-index white'>{sequence}</span>
         </header>
         <div className='performer-panel-content'></div>
