@@ -1,9 +1,17 @@
 {
-  "excludeFiles": ["frontend/vendor/**", "public/**", "*/node_modules/**"],
+  "excludeFiles": ["**/bundle.js", "frontend/vendor/**", "public/**", "*/node_modules/**"],
   "fileExtensions": [".js", ".jsx"],
   "preset": "airbnb",
   "disallowMultipleVarDecl": null,
   "safeContextKeyword": ["self"],
   "requireCamelCaseOrUpperCaseIdentifiers": false,
-  "requirePaddingNewLinesBeforeLineComments": null
+  "requirePaddingNewLinesBeforeLineComments": null,
+  "requireSpacesInFunctionDeclaration": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": true
+  },
+  "requireSpacesInFunctionExpression": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": true
+  }
 }

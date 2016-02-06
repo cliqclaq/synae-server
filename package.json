@@ -2,8 +2,10 @@
   "name": "synae-server",
   "version": "0.0.0",
   "description": "Rhizome-powered gestural-trigger spatial audience participation",
+  "pre-commit": [ "cs:check" ],
   "scripts": {
-    "codestyle": "jscs --fix .",
+    "cs:check": "jscs .",
+    "cs:fix": "jscs --fix .",
     "css": "cssnext frontend/style.css > public/bundle.css",
     "js": "browserify -d -t [babelify] frontend/index.js -o public/bundle.js",
     "prod": "npm run css && NODE_ENV=production npm run js && npm run optimize",
@@ -47,6 +49,7 @@
   },
   "devDependencies": {
     "jscs": "^2.9.0",
+    "pre-commit": "^1.1.2",
     "watchify": "^3.4.0"
   }
 }
