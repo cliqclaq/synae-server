@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Rhizome-powered gestural-trigger spatial audience participation",
   "scripts": {
+    "codestyle": "jscs --fix .",
     "css": "cssnext frontend/style.css > public/bundle.css",
     "js": "browserify -d -t [babelify --presets es2015,stage-1,react --sourceMapRelative . ] frontend/index.js -o public/bundle.js",
     "prod": "npm run css && NODE_ENV=production npm run js && npm run optimize",
@@ -45,6 +46,7 @@
     "uglify-js": "^2.4.24"
   },
   "devDependencies": {
+    "jscs": "^2.9.0",
     "watchify": "^3.4.0"
   }
 }
