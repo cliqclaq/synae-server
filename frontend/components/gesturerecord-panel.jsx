@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import debug from 'debug';
 
 import devicemotion from '../devicemotion';
@@ -13,7 +13,7 @@ export default class extends React.Component {
   state = {
     recording: false,
     motions: []
-  }
+  };
 
   componentDidMount () {
     this.disconnectDeviceMotion = devicemotion((e) => {
@@ -23,16 +23,16 @@ export default class extends React.Component {
         event: e
       });
     });
-  }
+  };
 
   componentWillUnmount () {
     this.disconnectDeviceMotion();
-  }
+  };
 
   beginRecording = () => {
     this.setState({ recording: true });
     this.motions.length = 0;
-  }
+  };
 
   stopRecording = () => {
     let xformed = this.motions.map(m => {
@@ -44,12 +44,12 @@ export default class extends React.Component {
     });
 
     this.setState({ recording: false, motions: xformed });
-  }
+  };
 
   autoSelect = (e) => {
     let input = e.currentTarget;
     input.setSelectionRange(0, input.value.length+1);
-  }
+  };
 
   complementaryFilter (motions) {
     let angleX = 0;
@@ -67,7 +67,7 @@ export default class extends React.Component {
       lastTime = m.timestamp;
       return ts;
     }, { x: [], y: [], z: [] });
-  }
+  };
 
   toTimeSeries (motions) {
     return motions.reduce((ts, m) => {
@@ -82,7 +82,7 @@ export default class extends React.Component {
       x: [], y: [], z: [],
       alpha: [], beta: [], gamma: []
     });
-  }
+  };
 
   findMeatyStartEnd (values, threshold) {
     let start = 6;
@@ -114,7 +114,7 @@ export default class extends React.Component {
     }
 
     return [start, end];
-  }
+  };
 
   findMeatyStartEndForAll (series, threshold) {
     let min = Number.MAX_VALUE;
@@ -125,7 +125,7 @@ export default class extends React.Component {
       max = Math.max(max, end);
     });
     return [min, max];
-  }
+  };
 
   render () {
     let {motions} = this.state;
@@ -186,5 +186,5 @@ export default class extends React.Component {
           style={{minHeight: '100px'}}></textarea>
       </div>
     </div>
-  }
+  };
 }

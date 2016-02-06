@@ -3,7 +3,8 @@ import objectAssign from 'object-assign';
 
 import querystring from 'querystring';
 import debug from 'debug';
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 import waakick from './waakick';
 import ConductorPanel from './components/conductor-panel.jsx';
@@ -425,19 +426,18 @@ function initialize () {
     rconnected
   };
 
-  React.initializeTouchEvents(true);
   let root = document.querySelector('.react-root');
 
   if ('conductor' in qs) {
-    React.render(<ConductorPanel {...commonProps} />, root);
+    ReactDOM.render(<ConductorPanel {...commonProps} />, root);
   } else if ('gesturedebug' in qs) {
-    React.render(<GestureRecordPanel />, root);
+    ReactDOM.render(<GestureRecordPanel />, root);
   } else if ('sensordump' in qs) {
-    React.render(<SensorDumperPanel />, root);
+    ReactDOM.render(<SensorDumperPanel />, root);
   } else if ('performer' in qs) {
-    React.render(<PerformerPanel {...commonProps} />, root);
+    ReactDOM.render(<PerformerPanel {...commonProps} />, root);
   } else {
-    React.render(<AudiencePanel {...commonProps} rid={rhizome.id} />, root);
+    ReactDOM.render(<AudiencePanel {...commonProps} rid={rhizome.id} />, root);
   }
 
   // TODO: this listener might be in a race condition since it's added

@@ -1,11 +1,11 @@
-import React from 'react/addons';
+import React from 'react';
 
 export default class extends React.Component {
 
   static propTypes = {
     groups: React.PropTypes.array.isRequired,
     onGroupSelect: React.PropTypes.func.isRequired
-  }
+  };
 
   render() {
     return (
@@ -58,6 +58,6 @@ export default class extends React.Component {
         </div>
       </div>
     )
-  }
+  };
 
 }

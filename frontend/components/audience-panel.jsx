@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import debug from 'debug';
 import GroupChooser from './group-chooser.jsx';
 
@@ -23,7 +23,7 @@ const Instruments = {
   'scratch': ScratchInstrument,
   'reach': ReachInstrument,
   'waterdrop': WaterdropInstrument
-}
+};
 
 export default class AudiencePanel extends React.Component {
 
@@ -32,13 +32,13 @@ export default class AudiencePanel extends React.Component {
     rrecv: React.PropTypes.func.isRequired,
     rconnected: React.PropTypes.func.isRequired,
     rid: React.PropTypes.string.isRequired
-  }
+  };
 
   state = {
     groupId: null,
     world: null,
     actx: null
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -63,7 +63,7 @@ export default class AudiencePanel extends React.Component {
         this.setState({ world: JSON.parse(args[0]) });
       }
     });
-  }
+  };
 
   kickWebAudio = (e) => {
     if (e) {
@@ -72,12 +72,12 @@ export default class AudiencePanel extends React.Component {
     }
     dbg('waakick');
     this.setState({ actx: waakick() });
-  }
+  };
 
   onGroupSelect = (groupId) => {
     this.setState({ ...this.state, groupId });
     // TODO: tell the server? just for visualization purposes
-  }
+  };
 
   render() {
     let hasKickedAudio = !!this.state.actx;
@@ -133,6 +133,6 @@ export default class AudiencePanel extends React.Component {
         }
       </div>
     )
-  }
+  };
 
 }

@@ -1,14 +1,14 @@
-import React from 'react/addons';
+import React from 'react';
 
 export default class extends React.Component {
 
   static propTypes = {
     actx: React.PropTypes.object.isRequired
-  }
+  };
 
   state = {
     step: 0
-  }
+  };
 
   componentDidMount () {
 
@@ -22,7 +22,7 @@ export default class extends React.Component {
     }
 
     next();
-  }
+  };
 
   onTonePress = (e) => {
     e.preventDefault();
@@ -41,7 +41,7 @@ export default class extends React.Component {
     setTimeout(() => {
       oscillator.stop(0);
     }, 6000)
-  }
+  };
 
   render () {
     let { step } = this.state;
@@ -58,5 +58,5 @@ export default class extends React.Component {
           onTouchEnd={this.onTonePress}>Press and Listen for a Tone</button></li>}
       </ul>
     </div>
-  }
+  };
 }
