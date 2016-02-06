@@ -18,16 +18,16 @@ const TIMESTEP = 100;
 const DENSITY = 10;
 
 export default class extends React.Component {
-  
+
   static propTypes = {
     actx: React.PropTypes.object.isRequired,
     sample: React.PropTypes.string.isRequired,
     instructions: React.PropTypes.string.isRequired,
-    iconUrl: React.PropTypes.string.isRequired
+    iconUrl: React.PropTypes.string.isRequired,
   };
 
   state = {
-    buffer: null
+    buffer: null,
   };
 
   running = true;
@@ -76,8 +76,8 @@ export default class extends React.Component {
         cpos: { x: ix * boxWidth, y: iy * boxWidth, z: 0 },
         ppos: { x: ix * boxWidth, y: iy * boxWidth, z: 0 },
         acel: { x: 0, y: 0, z: 0 },
-        mass: 5.5
-      }
+        mass: 5.5,
+      };
 
       var idx = points.push(point) - 1;
 
@@ -98,26 +98,26 @@ export default class extends React.Component {
       var dist;
 
       if (!isRightEdge && !isFirstRow) {
-        constraints.push( [point, points[ur], v3.distance(point.cpos, points[ur].cpos)] );
+        constraints.push([point, points[ur], v3.distance(point.cpos, points[ur].cpos)]);
       }
 
       if (!isFirstRow) {
-        constraints.push( [point, points[up], v3.distance(point.cpos, points[up].cpos)] );
+        constraints.push([point, points[up], v3.distance(point.cpos, points[up].cpos)]);
       }
 
       if (!isLeftEdge) {
-        constraints.push( [point, points[lt], v3.distance(point.cpos, points[lt].cpos)] );
+        constraints.push([point, points[lt], v3.distance(point.cpos, points[lt].cpos)]);
       }
 
       if (!isLeftEdge && !isFirstRow) {
-        constraints.push( [point, points[ul], v3.distance(point.cpos, points[ul].cpos)] );
+        constraints.push([point, points[ul], v3.distance(point.cpos, points[ul].cpos)]);
       }
     }
 
     points[0].mass = 0;
     points[pointCountX - 1].mass = 0;
-    points[points.length-1].mass = 0;
-    points[points.length-pointCountX].mass = 0;
+    points[points.length - 1].mass = 0;
+    points[points.length - pointCountX].mass = 0;
 
     //debugDrawConstraints(ctx, constraints);
     this.drawSquares();
@@ -126,7 +126,7 @@ export default class extends React.Component {
 
   componentDidMount () {
 
-    let {actx} = this.props;
+    let { actx } = this.props;
     this.gain = actx.createGain();
     this.gain.connect(actx.destination);
     this.gain.value = 1;
@@ -145,20 +145,20 @@ export default class extends React.Component {
   }
 
   drawSquares () {
-    let {ctx, points, boxWidth, maxZVelocity} = this;
+    let { ctx, points, boxWidth, maxZVelocity } = this;
 
     for (var i = 0; i < points.length; i++) {
       var cpos = points[i].cpos;
       var ppos = points[i].ppos;
       var velz = cpos.z - ppos.z;
-      var hue = (velz / maxZVelocity) * HUE_DEPTH //Math.PI * 2;
+      var hue = (velz / maxZVelocity) * HUE_DEPTH; //Math.PI * 2;
       var cameraZ = 1000;
 
       var distRatio = cpos.z / cameraZ;
       var w = boxWidth + (distRatio * boxWidth);
       var h = boxWidth + (distRatio * boxWidth);
       var x = cpos.x - ((distRatio * boxWidth) / 2);
-      var y = cpos.y - ((distRatio * boxWidth) / 2)
+      var y = cpos.y - ((distRatio * boxWidth) / 2);
 
       ctx.beginPath();
       ctx.fillStyle = this.hues(hue);
@@ -168,7 +168,7 @@ export default class extends React.Component {
 
   tick = () => {
     if (!this.running) return;
-    let {ctx, cvs, points, constraints} = this;
+    let { ctx, cvs, points, constraints } = this;
 
     /*for (i = 0; i < points.length; i++) {
       if (
@@ -215,7 +215,7 @@ export default class extends React.Component {
 
     let ix = Math.floor(x / this.boxWidth);
     let iy = Math.floor(y / this.boxWidth);
-    let i = iy * this.pointCountX + ix
+    let i = iy * this.pointCountX + ix;
     let point = this.points[i];
 
     if (!point
@@ -229,18 +229,19 @@ export default class extends React.Component {
   };
 
   playSound() {
-    let {actx} = this.props;
+    let { actx } = this.props;
     let sample = actx.createBufferSource();
     sample.buffer = this.state.buffer;
-    sample.connect(this.gain)
-    sample.onended = () => { sample.disconnect(); }
+    sample.connect(this.gain);
+    sample.onended = () => { sample.disconnect(); };
+
     sample.start();
   }
 
   render () {
     return this.state.buffer
       ? <div style={{
-            height: '100%'
+            height: '100%',
           }}>
         <canvas
           onTouchEnd={this.touchClick}
@@ -257,19 +258,12 @@ export default class extends React.Component {
           backgroundImage: 'url(' + this.props.iconUrl + ')',
           backgroundSize: '50%',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: '50% 66%'
+          backgroundPosition: '50% 66%',
         }}><h1 onClick={this.touchClick} onTouchEnd={this.touchClick} className='center'>{this.props.instructions}</h1></div>
         </div>
-      : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>
+      : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>;
   }
 }
-
-
-
-
-
-
-
 
 function debugDrawConstraints(ctx, constraints) {
   ctx.lineStyle = '2px black solid';
@@ -285,55 +279,55 @@ function debugDrawPoints(ctx, points) {
   for (var i = 0; i < points.length; i++) {
     var cpos = points[i].cpos;
     ctx.beginPath();
-    ctx.arc(cpos.x, cpos.y, 5, 0, Math.PI*2, false);
+    ctx.arc(cpos.x, cpos.y, 5, 0, Math.PI * 2, false);
     ctx.fill();
   }
 }
-
 
 function huemaster(gradations, s, l, a) {
   var hexes = [];
   var circle = gradations;
 
   for (var i = LOWER_BOUND_HUE; i < gradations; i++) {
-    var h = (i/gradations) * circle;
-    hexes.push( HSLtoRGB(h, s, l, a) );
+    var h = (i / gradations) * circle;
+    hexes.push(HSLtoRGB(h, s, l, a));
   }
 
-  return function(h) {
+  return function (h) {
     var i = Math.floor((h / circle) * gradations);
     return hexes[i];
-  }
+  };
 }
 
 // https://github.com/kamicane/rgb/blob/76045440a8e9416d828a0c44c6d9009fdb674253/index.js#L57
 
-function HUEtoRGB(p, q, t){
-  if (t < 0) t += 1
-  if (t > 1) t -= 1
-  if (t < 1 / 6) return p + (q - p) * 6 * t
-  if (t < 1 / 2) return q
-  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
-  return p
+function HUEtoRGB(p, q, t) {
+  if (t < 0) t += 1;
+  if (t > 1) t -= 1;
+  if (t < 1 / 6) return p + (q - p) * 6 * t;
+  if (t < 1 / 2) return q;
+  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+  return p;
 }
 
-function HSLtoRGB(h, s, l, a){
-  var r, b, g
-  if (a == null || a === "") a = 1
-  h = parseFloat(h) / 360
-  s = parseFloat(s) / 100
-  l = parseFloat(l) / 100
-  a = parseFloat(a) / 1
-  if (h > 1 || h < 0 || s > 1 || s < 0 || l > 1 || l < 0 || a > 1 || a < 0) return null
-  if (s === 0){
-    r = b = g = l
+function HSLtoRGB(h, s, l, a) {
+  var r, b, g;
+  if (a == null || a === '') a = 1;
+  h = parseFloat(h) / 360;
+  s = parseFloat(s) / 100;
+  l = parseFloat(l) / 100;
+  a = parseFloat(a) / 1;
+  if (h > 1 || h < 0 || s > 1 || s < 0 || l > 1 || l < 0 || a > 1 || a < 0) return null;
+  if (s === 0) {
+    r = b = g = l;
   } else {
-    var q = l < 0.5 ? l * (1 + s) : l + s - l * s
-    var p = 2 * l - q
-    r = HUEtoRGB(p, q, h + 1 / 3)
-    g = HUEtoRGB(p, q, h)
-    b = HUEtoRGB(p, q, h - 1 / 3)
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    var p = 2 * l - q;
+    r = HUEtoRGB(p, q, h + 1 / 3);
+    g = HUEtoRGB(p, q, h);
+    b = HUEtoRGB(p, q, h - 1 / 3);
   }
+
   return '#'
     + Math.floor(r * 255).toString(16)
     + Math.floor(g * 255).toString(16)

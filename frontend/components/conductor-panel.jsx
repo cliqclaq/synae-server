@@ -13,15 +13,15 @@ let debounce = (fn, wait) => {
   return (...args) => {
     if (ref) clearTimeout(ref);
     ref = setTimeout(() => fn(...args), wait);
-  }
-}
+  };
+};
 
 export default class ConductorPanel extends React.Component {
 
   static propTypes = {
     rsend: React.PropTypes.func.isRequired,
     rrecv: React.PropTypes.func.isRequired,
-    rconnected: React.PropTypes.func.isRequired
+    rconnected: React.PropTypes.func.isRequired,
   };
 
   actx = waakick();
@@ -35,7 +35,7 @@ export default class ConductorPanel extends React.Component {
     timingHasStarted: false,
     sectionTimers: {
       // will have group-id => timeoutid
-    }
+    },
   };
 
   constructor(props) {
@@ -48,8 +48,8 @@ export default class ConductorPanel extends React.Component {
     this.setupTimings = debounce(this.setupTimings, 20);
 
     // Shortcuts to rhizome callbacks
-    let {rsend, rrecv, rconnected} = this.props;
-    Object.assign(this, {rsend, rrecv, rconnected});
+    let { rsend, rrecv, rconnected } = this.props;
+    Object.assign(this, { rsend, rrecv, rconnected });
 
     this.rconnected(() => {
       // Immediately send world state to resync in the event of a crash
@@ -95,7 +95,7 @@ export default class ConductorPanel extends React.Component {
   };
 
   componentDidMount () {
-    let {actx} = this;
+    let { actx } = this;
     this.gain = actx.createGain();
     this.gain.connect(actx.destination);
     this.gain.value = 1;
@@ -107,7 +107,7 @@ export default class ConductorPanel extends React.Component {
           actx.decodeAudioData(data, b => resolve(b));
         });
       });
-    }
+    };
 
     let blanker = () => {
       return new Promise((resolve, reject) => {
@@ -116,19 +116,19 @@ export default class ConductorPanel extends React.Component {
         let { sampleRate } = actx;
         let buffer = actx.createBuffer(1, duration, sampleRate);
         resolve(buffer);
-      })
-    }
+      });
+    };
 
     let catcher = e => {
       console.error(e);
-    }
+    };
 
     Promise.all([
       blanker(),
       pbuffer('audio/mp3/section_1.mp3'),
       pbuffer('audio/mp3/section_2.mp3'),
       pbuffer('audio/mp3/section_3.mp3'),
-      blanker()
+      blanker(),
     ])
     .catch(catcher)
     .then(args => {
@@ -171,6 +171,7 @@ export default class ConductorPanel extends React.Component {
           dbg('clearing timeout', g.id);
           clearTimeout(state.sectionTimers[g.id]);
         }
+
         dbg('setting timeout', g.id, duration);
         state.sectionTimers[g.id] = setTimeout(() => {
           dbg('firing timeout', g.id, duration);
@@ -182,7 +183,7 @@ export default class ConductorPanel extends React.Component {
           }
         }, duration);
       }
-    })
+    });
     this.setState(state);
   };
 
@@ -191,7 +192,7 @@ export default class ConductorPanel extends React.Component {
     state.groups.forEach(g => {
       if (g.id !== groupId) return;
 
-      let section = g.sections[g.activeSection]
+      let section = g.sections[g.activeSection];
       let { sequences } = section;
 
       dbg('sequence change', g.id, g.activeSequence);
@@ -310,7 +311,7 @@ export default class ConductorPanel extends React.Component {
         </div>
 
         <div className="group-list">
-          {this.state.groups.map((g,i) => {
+          {this.state.groups.map((g, i) => {
             let section = g.sections[g.activeSection];
             let gesture = section.sequences[g.activeSequence].gesture;
             return (
@@ -325,11 +326,11 @@ export default class ConductorPanel extends React.Component {
                   onClick={this.changeSequenceBy.bind(this, g.id, 1)}
                   >Next Sequence</button>
               </div>
-            )
+            );
           })}
         </div>
       </div>
-    )
+    );
   };
 
 }

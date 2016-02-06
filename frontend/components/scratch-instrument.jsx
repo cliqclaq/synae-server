@@ -13,11 +13,11 @@ export default class extends React.Component {
     actx: React.PropTypes.object.isRequired,
     sample: React.PropTypes.string.isRequired,
     instructions: React.PropTypes.string.isRequired,
-    iconUrl: React.PropTypes.string.isRequired
+    iconUrl: React.PropTypes.string.isRequired,
   };
 
   state = {
-    buffer: null
+    buffer: null,
   };
 
   motions = [];
@@ -52,12 +52,12 @@ export default class extends React.Component {
       }
     });
 
-    let {actx} = this.props;
+    let { actx } = this.props;
     this.gain = actx.createGain();
     this.gain.connect(actx.destination);
     this.gain.value = 1;
 
-    dbg(this.props.sample); 
+    dbg(this.props.sample);
 
     binaryXHR(this.props.sample, (err, data) => {
       actx.decodeAudioData(data, buffer => {
@@ -75,11 +75,13 @@ export default class extends React.Component {
       e.preventDefault();
       e.stopPropagation();
     }
-    let {actx} = this.props;
+
+    let { actx } = this.props;
     let sample = actx.createBufferSource();
     sample.buffer = this.state.buffer;
-    sample.connect(this.gain)
-    sample.onended = () => { sample.disconnect(); }
+    sample.connect(this.gain);
+    sample.onended = () => { sample.disconnect(); };
+
     sample.start();
   };
 
@@ -95,10 +97,10 @@ export default class extends React.Component {
           backgroundSize: '40%, 50%',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 33%, 50% 76%',
-          height: '100%'
+          height: '100%',
         }}>
           <h1 className='center'>{this.props.instructions}</h1>
         </div>
-      : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>
+      : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>;
   }
 }

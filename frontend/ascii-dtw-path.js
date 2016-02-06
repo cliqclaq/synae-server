@@ -1,4 +1,4 @@
-export default function asciiDTWPath (path, w, h) {
+export default function asciiDTWPath(path, w, h) {
   var all = new Array(w * h);
 
   // x are columns

@@ -4,16 +4,16 @@ export default class extends React.Component {
 
   static propTypes = {
     groups: React.PropTypes.array.isRequired,
-    onGroupSelect: React.PropTypes.func.isRequired
+    onGroupSelect: React.PropTypes.func.isRequired,
   };
 
   render() {
     return (
       <div className='flex flex-column'>
-        <h1 style={{maxHeight:'10vh'}} className='px2'>Where Are You?</h1>
+        <h1 style={{ maxHeight:'10vh' }} className='px2'>Where Are You?</h1>
         <div className='center'>Piano</div>
         <div className='flex'>
-          <div style={{height: '35vh'}} className='flex-auto px2 py2'>
+          <div style={{ height: '35vh' }} className='flex-auto px2 py2'>
             <button
               key={this.props.groups[1].id}
               type='button'
@@ -23,7 +23,7 @@ export default class extends React.Component {
               data-groupid={this.props.groups[1].id}
             >{this.props.groups[1].name}</button>
           </div>
-          <div style={{height: '35vh'}} className='flex-auto px2 py2'>
+          <div style={{ height: '35vh' }} className='flex-auto px2 py2'>
             <button
               key={this.props.groups[0].id}
               type='button'
@@ -35,7 +35,7 @@ export default class extends React.Component {
           </div>
         </div>
         <div className='flex'>
-          <div style={{height: '35vh'}} className='flex-auto px2 py2'>
+          <div style={{ height: '35vh' }} className='flex-auto px2 py2'>
             <button
               key={this.props.groups[2].id}
               type='button'
@@ -45,7 +45,7 @@ export default class extends React.Component {
               data-groupid={this.props.groups[2].id}
             >{this.props.groups[2].name}</button>
           </div>
-          <div style={{height: '35vh'}} className='flex-auto px2 py2'>
+          <div style={{ height: '35vh' }} className='flex-auto px2 py2'>
             <button
               key={this.props.groups[3].id}
               type='button'
@@ -57,7 +57,7 @@ export default class extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   };
 
 }

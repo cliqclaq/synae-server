@@ -15,11 +15,11 @@ export default class extends React.Component {
     groupId: React.PropTypes.string.isRequired,
     instructions: React.PropTypes.string.isRequired,
     iconUrl: React.PropTypes.string.isRequired,
-    minimumForce: React.PropTypes.number.isRequired
+    minimumForce: React.PropTypes.number.isRequired,
   };
 
   state = {
-    buffer: null
+    buffer: null,
   };
 
   motions = [];
@@ -37,7 +37,7 @@ export default class extends React.Component {
 
       let force = this.props.minimumForce;
       let gesture = { x, y, z };
-      let shake = [ -force, 0, force, 0 ];
+      let shake = [-force, 0, force, 0];
       let recorded = { x: shake, y: shake, z: shake };
       let still = [0, 0, 0, 0];
 
@@ -54,7 +54,7 @@ export default class extends React.Component {
       }
     });
 
-    let {actx} = this.props;
+    let { actx } = this.props;
     this.gain = actx.createGain();
     this.gain.connect(actx.destination);
     this.gain.value = 1;
@@ -73,11 +73,12 @@ export default class extends React.Component {
   };
 
   triggerSound = () => {
-    let {actx} = this.props;
+    let { actx } = this.props;
     let sample = actx.createBufferSource();
     sample.buffer = this.state.buffer;
-    sample.connect(this.gain)
-    sample.onended = () => { sample.disconnect(); }
+    sample.connect(this.gain);
+    sample.onended = () => { sample.disconnect(); };
+
     sample.start();
   };
 
@@ -88,10 +89,10 @@ export default class extends React.Component {
           backgroundSize: '50%',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 66%',
-          height: '100%'
+          height: '100%',
         }}>
           <h1 className='center'>{this.props.instructions}</h1>
         </div>
-      : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>
+      : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>;
   };
 }
