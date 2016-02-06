@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 export default class PerformerPanel extends React.Component {
 
@@ -6,14 +6,14 @@ export default class PerformerPanel extends React.Component {
     rsend: React.PropTypes.func.isRequired,
     rrecv: React.PropTypes.func.isRequired,
     rconnected: React.PropTypes.func.isRequired
-  }
+  };
 
   state = {
     section: 0,
     sequence: 0,
 
     isTouching: false
-  }
+  };
 
   constructor (props) {
     super(props);
@@ -35,20 +35,20 @@ export default class PerformerPanel extends React.Component {
         this.setState({ section, sequence });
       }
     });
-  }
+  };
 
   handleTouchStart (e) {
     e.preventDefault();
     e.stopPropagation();
     this.setState({ isTouching: true });
-  }
+  };
 
   handleTouchEnd (msg, e) {
     e.preventDefault();
     e.stopPropagation();
     this.setState({ isTouching: false });
     this.rsend('/performer-events', [msg]);
-  }
+  };
 
   render() {
     let {
@@ -76,6 +76,6 @@ export default class PerformerPanel extends React.Component {
         <div className='performer-panel-content'></div>
       </div>
     )
-  }
+  };
 
 }

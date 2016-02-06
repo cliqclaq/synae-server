@@ -4,7 +4,7 @@ import inertia from 'pocket-physics/inertia3d';
 import constrain from 'pocket-physics/distanceconstraint3d';
 import drag from 'pocket-physics/drag3d';
 
-import React from 'react/addons';
+import React from 'react';
 import binaryXHR from 'binary-xhr';
 
 const CONSTRAINT_ITERATIONS = 3;
@@ -24,11 +24,11 @@ export default class extends React.Component {
     sample: React.PropTypes.string.isRequired,
     instructions: React.PropTypes.string.isRequired,
     iconUrl: React.PropTypes.string.isRequired
-  }
+  };
 
   state = {
     buffer: null
-  }
+  };
 
   running = true;
 
@@ -45,7 +45,7 @@ export default class extends React.Component {
     this.cvs.width = window.innerWidth;
     this.cvs.height = window.innerHeight;
     this.boxWidth = Math.floor(Math.min(this.cvs.width, this.cvs.height) / DENSITY);
-  }
+  };
 
   init() {
     let cvs = this.cvs = React.findDOMNode(this).querySelector('canvas');
@@ -204,7 +204,7 @@ export default class extends React.Component {
     }
 
     requestAnimationFrame(this.tick);
-  }
+  };
 
   touchClick = (e) => {
     e.preventDefault();
@@ -226,7 +226,7 @@ export default class extends React.Component {
 
     point.acel.z += this.maxZVelocity * 10;
     this.playSound();
-  }
+  };
 
   playSound() {
     let {actx} = this.props;

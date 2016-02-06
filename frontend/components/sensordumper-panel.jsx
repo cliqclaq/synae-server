@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import debug from 'debug';
 
 import devicemotion from '../devicemotion';
@@ -15,7 +15,7 @@ let avg = (...args) => {
     count += i
   }
   return sum / count
-}
+};
 
 export default class extends React.Component {
 
@@ -23,7 +23,7 @@ export default class extends React.Component {
 
   state = {
     motions: []
-  }
+  };
 
   componentDidMount () {
     this.disconnectDeviceMotion = devicemotion((e) => {
@@ -34,11 +34,11 @@ export default class extends React.Component {
       if (motions.length > 10) motions.pop();
       this.setState({ motions });
     });
-  }
+  };
 
   componentWillUnmount () {
     this.disconnectDeviceMotion();
-  }
+  };
 
   render () {
     let textStyle = {
@@ -75,5 +75,5 @@ export default class extends React.Component {
       <p style={textStyle}>gamma {gamma}</p>
       <p style={textStyle}>DT {dt}</p>
     </div>
-  }
+  };
 }

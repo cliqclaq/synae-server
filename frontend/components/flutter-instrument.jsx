@@ -1,5 +1,5 @@
 import debug from 'debug';
-import React from 'react/addons';
+import React from 'react';
 import binaryXHR from 'binary-xhr';
 import devicemotion from '../devicemotion';
 import DTW from 'dtw';
@@ -16,11 +16,11 @@ export default class extends React.Component {
     instructions: React.PropTypes.string.isRequired,
     iconUrl: React.PropTypes.string.isRequired,
     minimumForce: React.PropTypes.number.isRequired
-  }
+  };
 
   state = {
     buffer: null
-  }
+  };
 
   motions = [];
 
@@ -66,11 +66,11 @@ export default class extends React.Component {
         this.setState({ buffer });
       });
     });
-  }
+  };
 
   componentWillUnmount () {
     this.disconnectDeviceMotion();
-  }
+  };
 
   triggerSound = () => {
     let {actx} = this.props;
@@ -79,7 +79,7 @@ export default class extends React.Component {
     sample.connect(this.gain)
     sample.onended = () => { sample.disconnect(); }
     sample.start();
-  }
+  };
 
   render () {
     return this.state.buffer
@@ -93,5 +93,5 @@ export default class extends React.Component {
           <h1 className='center'>{this.props.instructions}</h1>
         </div>
       : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>
-  }
+  };
 }

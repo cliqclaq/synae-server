@@ -1,5 +1,5 @@
 import debug from 'debug';
-import React from 'react/addons';
+import React from 'react';
 import binaryXHR from 'binary-xhr';
 import devicemotion from '../devicemotion';
 import DTW from 'dtw';
@@ -13,11 +13,11 @@ export default class extends React.Component {
     sample: React.PropTypes.string.isRequired,
     instructions: React.PropTypes.string.isRequired,
     iconUrl: React.PropTypes.string.isRequired
-  }
+  };
 
   state = {
     buffer: null
-  }
+  };
 
   motions = [];
 
@@ -83,7 +83,7 @@ export default class extends React.Component {
     sample.connect(this.gain)
     sample.onended = () => { sample.disconnect(); }
     sample.start();
-  }
+  };
 
   render () {
     return this.state.buffer
