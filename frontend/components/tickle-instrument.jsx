@@ -16,8 +16,8 @@ let throttle = (fn, min) => {
       fn();
       prev = now;
     }
-  }
-}
+  };
+};
 
 export default class extends React.Component {
 
@@ -25,12 +25,12 @@ export default class extends React.Component {
     actx: React.PropTypes.object.isRequired,
     sample: React.PropTypes.string.isRequired,
     instructions: React.PropTypes.string.isRequired,
-    iconUrl: React.PropTypes.string.isRequired
+    iconUrl: React.PropTypes.string.isRequired,
   };
 
   state = {
     isLoading: true,
-    buffer: null
+    buffer: null,
   };
 
   constructor (props) {
@@ -43,7 +43,7 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
-    let {actx} = this.props;
+    let { actx } = this.props;
     this.gain = actx.createGain();
     this.gain.connect(actx.destination);
     this.gain.value = 1;
@@ -59,7 +59,6 @@ export default class extends React.Component {
     var mount = React.findDOMNode(this);
     var width = mount.getBoundingClientRect().width;
     var height = mount.getBoundingClientRect().height;
-    var me = this;
     var bubbles = [];
     var interval;
     var svg;
@@ -70,7 +69,7 @@ export default class extends React.Component {
       d3nodes = svg.selectAll('.bubble')
         .data(bubbles)
         .attr('cx', d => d.x)
-        .attr('cy', d => d.y)
+        .attr('cy', d => d.y);
     }
 
     let bounce = (ev) => {
@@ -78,11 +77,11 @@ export default class extends React.Component {
         let range = 10;
         bubble.x += (Math.random() * 2 * range - range);
         bubble.y += (Math.random() * 2 * range - range);
-      })
+      });
 
       this.playSound();
       sim.resume();
-    }
+    };
 
     svg = d3.select('.tickle-svg')
       .attr('width', width)
@@ -98,7 +97,7 @@ export default class extends React.Component {
       .on('tick', tick);
 
     interval = setInterval(() => {
-      bubbles.push({id: bubbles.length});
+      bubbles.push({ id: bubbles.length });
       sim.start();
 
       d3nodes = svg.selectAll('.bubble')
@@ -119,15 +118,16 @@ export default class extends React.Component {
       if (bubbles.length >= MAX_NODES) {
         clearInterval(interval);
       }
-    }, DT)
+    }, DT);
   }
 
   playSound() {
-    let {actx} = this.props;
+    let { actx } = this.props;
     let sample = actx.createBufferSource();
     sample.buffer = this.state.buffer;
-    sample.connect(this.gain)
-    sample.onended = () => { sample.disconnect(); }
+    sample.connect(this.gain);
+    sample.onended = () => { sample.disconnect(); };
+
     sample.start();
   }
 
@@ -138,12 +138,12 @@ export default class extends React.Component {
           backgroundSize: '40%',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 100%',
-          height: '100%'
+          height: '100%',
         }} className='tickle-container'>
         <div style={{
           position: 'absolute',
           top: '0px',
-          left: '0px'
+          left: '0px',
         }}><h1 className='center'>{this.props.instructions}</h1></div>
         <svg className='tickle-svg'></svg>
       </div>

@@ -11,10 +11,11 @@ let avg = (...args) => {
   var len = args.length;
   var count = 0;
   for (var i = 0; i < len; i++) {
-    sum += args[i] * (len - i) // newest to oldest values
-    count += i
+    sum += args[i] * (len - i); // newest to oldest values
+    count += i;
   }
-  return sum / count
+
+  return sum / count;
 };
 
 export default class extends React.Component {
@@ -22,7 +23,7 @@ export default class extends React.Component {
   motions = [];
 
   state = {
-    motions: []
+    motions: [],
   };
 
   componentDidMount () {
@@ -44,8 +45,8 @@ export default class extends React.Component {
     let textStyle = {
       fontSize: '32px',
       fontFamily: 'monospace',
-      whiteSpace: 'pre'
-    }
+      whiteSpace: 'pre',
+    };
 
     let { motions } = this.state;
 
@@ -74,6 +75,6 @@ export default class extends React.Component {
       <p style={textStyle}>beta {beta}</p>
       <p style={textStyle}>gamma {gamma}</p>
       <p style={textStyle}>DT {dt}</p>
-    </div>
+    </div>;
   };
 }

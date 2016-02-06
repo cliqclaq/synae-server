@@ -4,8 +4,9 @@ export default function (motions, out) {
   let angleZ = 0;
   let lastTime = 0;
   let cfilter = (angle, gyro, acel, dt) => {
-    return (0.98)*(angle + gyro*dt) + (0.02)*(acel)
-  }
+    return (0.98) * (angle + gyro * dt) + (0.02) * (acel);
+  };
+
   return motions.reduce((ts, m) => {
     let dt = (m.timestamp - (lastTime || motions[0].timestamp)) / 1000;
     ts.x.push(cfilter(angleX, m.rotationRate.alpha, m.acceleration.x, dt));

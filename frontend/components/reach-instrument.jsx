@@ -16,11 +16,11 @@ export default class extends React.Component {
     actx: React.PropTypes.object.isRequired,
     sample: React.PropTypes.string.isRequired,
     instructions: React.PropTypes.string.isRequired,
-    iconUrl: React.PropTypes.string.isRequired
+    iconUrl: React.PropTypes.string.isRequired,
   };
 
   state = {
-    buffer: null
+    buffer: null,
   };
 
   motions = [];
@@ -36,7 +36,7 @@ export default class extends React.Component {
       motions.unshift({
         acceleration: e.acceleration,
         rotationRate: e.rotationRate,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
       if (motions.length > 16) {
         motions.pop();
@@ -59,7 +59,7 @@ export default class extends React.Component {
       }
     });
 
-    let {actx} = this.props;
+    let { actx } = this.props;
     this.gain = actx.createGain();
     this.gain.connect(actx.destination);
     this.gain.value = 1;
@@ -78,11 +78,12 @@ export default class extends React.Component {
   }
 
   triggerSound = () => {
-    let {actx} = this.props;
+    let { actx } = this.props;
     let sample = actx.createBufferSource();
     sample.buffer = this.state.buffer;
-    sample.connect(this.gain)
-    sample.onended = () => { sample.disconnect(); }
+    sample.connect(this.gain);
+    sample.onended = () => { sample.disconnect(); };
+
     sample.start();
   };
 
@@ -93,11 +94,11 @@ export default class extends React.Component {
           backgroundSize: '50%',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 66%',
-          height: '100%'
+          height: '100%',
         }}>
           <h1 className='center'>{this.props.instructions}</h1>
           <p>{this.state.playing}</p>
         </div>
-      : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>
+      : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>;
   }
 }

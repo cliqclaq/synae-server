@@ -15,14 +15,14 @@ import WaterdropInstrument from './waterdrop-instrument.jsx';
 let dbg = debug('synae-server:client');
 
 const Instruments = {
-  'welcome': WelcomeInstrument,
-  'silent': SilentInstrument,
-  'flutter': FlutterInstrument,
-  'slash': SlashInstrument,
-  'tickle': TickleInstrument,
-  'scratch': ScratchInstrument,
-  'reach': ReachInstrument,
-  'waterdrop': WaterdropInstrument
+  welcome: WelcomeInstrument,
+  silent: SilentInstrument,
+  flutter: FlutterInstrument,
+  slash: SlashInstrument,
+  tickle: TickleInstrument,
+  scratch: ScratchInstrument,
+  reach: ReachInstrument,
+  waterdrop: WaterdropInstrument,
 };
 
 export default class AudiencePanel extends React.Component {
@@ -31,21 +31,21 @@ export default class AudiencePanel extends React.Component {
     rsend: React.PropTypes.func.isRequired,
     rrecv: React.PropTypes.func.isRequired,
     rconnected: React.PropTypes.func.isRequired,
-    rid: React.PropTypes.string.isRequired
+    rid: React.PropTypes.string.isRequired,
   };
 
   state = {
     groupId: null,
     world: null,
-    actx: null
+    actx: null,
   };
 
   constructor(props) {
     super(props);
 
     // Shortcuts to rhizome callbacks
-    let {rsend, rrecv, rconnected, rhizome} = this.props;
-    Object.assign(this, {rsend, rrecv, rconnected, rhizome});
+    let { rsend, rrecv, rconnected, rhizome } = this.props;
+    Object.assign(this, { rsend, rrecv, rconnected, rhizome });
 
     this.rconnected(() => {
       this.rsend('/sys/subscribe', ['/world-state']);
@@ -70,6 +70,7 @@ export default class AudiencePanel extends React.Component {
       e.preventDefault();
       e.stopPropagation();
     }
+
     dbg('waakick');
     this.setState({ actx: waakick() });
   };
@@ -84,17 +85,17 @@ export default class AudiencePanel extends React.Component {
 
     if (!hasKickedAudio) return <div style={{
       paddingTop: '45vh',
-      textAlign: 'center'
+      textAlign: 'center',
     }}>
       <button
         className='button button-big'
         style={{
           fontSize: '64px',
-          lineHeight: '64px'
+          lineHeight: '64px',
         }}
         onClick={this.kickWebAudio}
         onTouchEnd={this.kickWebAudio}>Begin</button>
-    </div>
+    </div>;
 
     let self = this;
     let hasWorldData = !!this.state.world;
@@ -132,7 +133,7 @@ export default class AudiencePanel extends React.Component {
               onGroupSelect={this.onGroupSelect} />
         }
       </div>
-    )
+    );
   };
 
 }

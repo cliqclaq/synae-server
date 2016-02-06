@@ -7,8 +7,8 @@ export default class extends React.Component {
         textAlign: 'center',
         marginTop: '35vh',
         marginLeft: '10vw',
-        marginRight: '10vw'
+        marginRight: '10vw',
       }}>{this.props.instructions}</h1>
-    </div>
+    </div>;
   }
 }

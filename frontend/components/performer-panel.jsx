@@ -5,27 +5,27 @@ export default class PerformerPanel extends React.Component {
   static propTypes = {
     rsend: React.PropTypes.func.isRequired,
     rrecv: React.PropTypes.func.isRequired,
-    rconnected: React.PropTypes.func.isRequired
+    rconnected: React.PropTypes.func.isRequired,
   };
 
   state = {
     section: 0,
     sequence: 0,
 
-    isTouching: false
+    isTouching: false,
   };
 
   constructor (props) {
     super(props);
 
     // Shortcuts to rhizome callbacks
-    let {rsend, rrecv, rconnected, rhizome} = this.props;
-    Object.assign(this, {rsend, rrecv, rconnected, rhizome});
+    let { rsend, rrecv, rconnected, rhizome } = this.props;
+    Object.assign(this, { rsend, rrecv, rconnected, rhizome });
 
     this.rconnected(() => {
       this.rsend('/sys/subscribe', ['/world-state']);
       this.rsend('/sys/resend', ['/world-state']);
-    })
+    });
 
     this.rrecv((addr, args) => {
       if (addr === '/world-state') {
@@ -52,7 +52,7 @@ export default class PerformerPanel extends React.Component {
 
   render() {
     let {
-      isTouching, section, sequence
+      isTouching, section, sequence,
     } = this.state;
 
     return (
@@ -75,7 +75,7 @@ export default class PerformerPanel extends React.Component {
         </header>
         <div className='performer-panel-content'></div>
       </div>
-    )
+    );
   };
 
 }

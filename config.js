@@ -1,29 +1,29 @@
-var fs = require('fs')
-var path = require('path')
+var fs = require('fs');
+var path = require('path');
 
 var storeDir = path.join(__dirname, 'tmp');
 if (!fs.existsSync(storeDir)) fs.mkdirSync(storeDir);
 
-var HTTP_PORT = parseInt(process.env.PORT,10) || 8080;
+var HTTP_PORT = parseInt(process.env.PORT, 10) || 8080;
 
 exports.servers = [
   {
     type: 'http',
     config: {
       port: HTTP_PORT,
-      staticDir: path.join(__dirname, 'public')
-    }
+      staticDir: path.join(__dirname, 'public'),
+    },
   },
   {
     type: 'websockets',
     config: {
       port: HTTP_PORT,
-      maxSockets: 350
-    }
-  }
-]
+      maxSockets: 350,
+    },
+  },
+];
 
 exports.connections = {
   store: storeDir,
-  collectStats: true
-}
+  collectStats: true,
+};

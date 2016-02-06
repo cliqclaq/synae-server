@@ -3,11 +3,11 @@ import React from 'react';
 export default class extends React.Component {
 
   static propTypes = {
-    actx: React.PropTypes.object.isRequired
+    actx: React.PropTypes.object.isRequired,
   };
 
   state = {
-    step: 0
+    step: 0,
   };
 
   componentDidMount () {
@@ -19,7 +19,7 @@ export default class extends React.Component {
         this.setState({ step: ++this.state.step });
         if (this.state.step < maxSteps) next();
       }, 2000);
-    }
+    };
 
     next();
   };
@@ -40,7 +40,7 @@ export default class extends React.Component {
     oscillator.start(0);
     setTimeout(() => {
       oscillator.stop(0);
-    }, 6000)
+    }, 6000);
   };
 
   render () {
@@ -57,6 +57,6 @@ export default class extends React.Component {
           onClick={this.onTonePress}
           onTouchEnd={this.onTonePress}>Press and Listen for a Tone</button></li>}
       </ul>
-    </div>
+    </div>;
   };
 }

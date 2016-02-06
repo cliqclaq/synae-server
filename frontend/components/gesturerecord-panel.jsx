@@ -12,7 +12,7 @@ export default class extends React.Component {
 
   state = {
     recording: false,
-    motions: []
+    motions: [],
   };
 
   componentDidMount () {
@@ -20,7 +20,7 @@ export default class extends React.Component {
       // TODO: put a window.performance.now()?
       if (this.state.recording === true) this.motions.push({
         timestamp: Date.now(),
-        event: e
+        event: e,
       });
     });
   };
@@ -39,8 +39,8 @@ export default class extends React.Component {
       return {
         timestamp: m.timestamp,
         acceleration: m.event.acceleration,
-        rotationRate: m.event.rotationRate
-      }
+        rotationRate: m.event.rotationRate,
+      };
     });
 
     this.setState({ recording: false, motions: xformed });
@@ -48,7 +48,7 @@ export default class extends React.Component {
 
   autoSelect = (e) => {
     let input = e.currentTarget;
-    input.setSelectionRange(0, input.value.length+1);
+    input.setSelectionRange(0, input.value.length + 1);
   };
 
   complementaryFilter (motions) {
@@ -57,8 +57,9 @@ export default class extends React.Component {
     let angleZ = 0;
     let lastTime = 0;
     let cfilter = (angle, gyro, acel, dt) => {
-      return (0.98)*(angle + gyro*dt) + (0.02)*(acel)
-    }
+      return (0.98) * (angle + gyro * dt) + (0.02) * (acel);
+    };
+
     return motions.reduce((ts, m) => {
       let dt = (m.timestamp - (lastTime || motions[0].timestamp)) / 1000;
       ts.x.push(cfilter(angleX, m.rotationRate.alpha, m.acceleration.x, dt));
@@ -79,8 +80,9 @@ export default class extends React.Component {
       ts.gamma.push(m.rotationRate.gamma);
       return ts;
     }, {
+
       x: [], y: [], z: [],
-      alpha: [], beta: [], gamma: []
+      alpha: [], beta: [], gamma: [],
     });
   };
 
@@ -91,11 +93,11 @@ export default class extends React.Component {
     let test = (arr, idx, value) => {
       let prev = Math.abs(arr[idx - 1] || arr[0]);
       let curr = Math.abs(value);
-      let next = Math.abs(arr[idx + 1] || arr[arr.length-1]);
+      let next = Math.abs(arr[idx + 1] || arr[arr.length - 1]);
       return curr >= threshold
         && (prev + curr) / 2 >= threshold * 1.2
-        && (next + curr) / 2 >= threshold * 1.2
-    }
+        && (next + curr) / 2 >= threshold * 1.2;
+    };
 
     for (let i = start; i < values.length; i++) {
       let v = values[i];
@@ -128,30 +130,30 @@ export default class extends React.Component {
   };
 
   render () {
-    let {motions} = this.state;
+    let { motions } = this.state;
     let timeSeries = this.toTimeSeries(motions);
     let compSeries = this.complementaryFilter(motions);
 
     if (motions.length) {
-      let {x, y, z} = timeSeries;
+      let { x, y, z } = timeSeries;
       let [start, end] = this.findMeatyStartEndForAll([x, y, z], 0.2);
       let meat = Object.keys(timeSeries).reduce((ts, k) => {
-        ts[k] = timeSeries[k].slice(start, end+1);
-        return ts
+        ts[k] = timeSeries[k].slice(start, end + 1);
+        return ts;
       }, {});
       let compMeat = this.complementaryFilter(motions.slice(start, end));
       let smoothedTimeSeries = motionsLowPass(motions, 0.1);
-      console.log('motions')
+      console.log('motions');
       console.log(JSON.stringify(motions));
-      console.log('timeSeries')
+      console.log('timeSeries');
       console.log(JSON.stringify(timeSeries));
-      console.log('compSeries')
+      console.log('compSeries');
       console.log(JSON.stringify(compSeries));
       console.log('timeSeries meat', start, end);
       console.log(JSON.stringify(meat));
       console.log('compSeries meat', start, end);
       console.log(JSON.stringify(compMeat));
-      console.log('smoothedTimeSeries')
+      console.log('smoothedTimeSeries');
       console.log(JSON.stringify(smoothedTimeSeries));
     }
 
@@ -171,20 +173,20 @@ export default class extends React.Component {
           value={JSON.stringify(motions, null, '  ')}
           onClick={this.autoSelect}
           className='col-12'
-          style={{minHeight: '100px'}}></textarea>
+          style={{ minHeight: '100px' }}></textarea>
         <p>Time Series ({motions.length})</p>
         <textarea
           value={JSON.stringify(timeSeries, null, '  ')}
           onClick={this.autoSelect}
           className='col-12'
-          style={{minHeight: '100px'}}></textarea>
+          style={{ minHeight: '100px' }}></textarea>
         <p>Complementary Filter ({compSeries.x.length})</p>
         <textarea
           value={JSON.stringify(compSeries, null, '  ')}
           onClick={this.autoSelect}
           className='col-12'
-          style={{minHeight: '100px'}}></textarea>
+          style={{ minHeight: '100px' }}></textarea>
       </div>
-    </div>
+    </div>;
   };
 }

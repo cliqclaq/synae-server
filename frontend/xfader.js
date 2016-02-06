@@ -1,5 +1,5 @@
 
-export default function xfader (buffers, actx, output, transitionTime) {
+export default function xfader(buffers, actx, output, transitionTime) {
 
   let gains = buffers.map(b => {
     let gain = actx.createGain();
@@ -16,9 +16,10 @@ export default function xfader (buffers, actx, output, transitionTime) {
     sample.connect(gains[idx]);
     sample.onended = () => {
       sample.disconnect();
-    }
+    };
+
     return sample;
-  }
+  };
 
   let fadeTo = (toIndex) => {
     let future = actx.currentTime + transitionTime;
@@ -30,9 +31,9 @@ export default function xfader (buffers, actx, output, transitionTime) {
     if (samples[toIndex]) samples[toIndex].stop();
     let sample = samples[toIndex] = sampleForBuffer(toIndex);
     sample.start();
-  }
+  };
 
   return {
-    fadeTo
-  }
+    fadeTo,
+  };
 }
