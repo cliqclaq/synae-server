@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import d3 from 'd3';
 import binaryXHR from 'binary-xhr';
 
@@ -26,12 +26,12 @@ export default class extends React.Component {
     sample: React.PropTypes.string.isRequired,
     instructions: React.PropTypes.string.isRequired,
     iconUrl: React.PropTypes.string.isRequired
-  }
+  };
 
   state = {
     isLoading: true,
     buffer: null
-  }
+  };
 
   constructor (props) {
     super(props);

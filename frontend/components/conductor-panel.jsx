@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import debug from 'debug';
 import { Promise } from 'es6-promise';
 import binaryXHR from 'binary-xhr';
@@ -22,7 +22,7 @@ export default class ConductorPanel extends React.Component {
     rsend: React.PropTypes.func.isRequired,
     rrecv: React.PropTypes.func.isRequired,
     rconnected: React.PropTypes.func.isRequired
-  }
+  };
 
   actx = waakick();
   gain = null;
@@ -36,7 +36,7 @@ export default class ConductorPanel extends React.Component {
     sectionTimers: {
       // will have group-id => timeoutid
     }
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -92,7 +92,7 @@ export default class ConductorPanel extends React.Component {
         }
       }
     });
-  }
+  };
 
   componentDidMount () {
     let {actx} = this;
@@ -136,7 +136,7 @@ export default class ConductorPanel extends React.Component {
       this.setState({ buffers: args });
     })
     .catch(catcher);
-  }
+  };
 
   startPerformance = () => {
     let { state } = this;
@@ -152,14 +152,14 @@ export default class ConductorPanel extends React.Component {
 
     this.setState(state);
     this.setupTimings();
-  }
+  };
 
   mutePerformance = () => {
     let param = this.gain.gain;
     let now = this.actx.currentTime;
     param.cancelScheduledValues(now);
     param.linearRampToValueAtTime(0, now + 0.1);
-  }
+  };
 
   setupTimings = () => {
     let { state } = this;
@@ -184,7 +184,7 @@ export default class ConductorPanel extends React.Component {
       }
     })
     this.setState(state);
-  }
+  };
 
   changeSequenceBy (groupId, plusOrMinus) {
     let { state } = this;
@@ -220,7 +220,7 @@ export default class ConductorPanel extends React.Component {
     });
     this.setState(state);
     this.setupTimings();
-  }
+  };
 
   nextSequenceForAll () {
     let { state } = this;
@@ -228,7 +228,7 @@ export default class ConductorPanel extends React.Component {
       this.changeSequenceBy(g.id, 1);
     });
     this.setState(state);
-  }
+  };
 
   nextSection = () => {
     let { state } = this;
@@ -245,7 +245,7 @@ export default class ConductorPanel extends React.Component {
     this.xfader.fadeTo(activeSection);
     this.setState(state);
     this.setupTimings();
-  }
+  };
 
   prevSection = () => {
     let { state } = this;
@@ -261,20 +261,20 @@ export default class ConductorPanel extends React.Component {
     this.xfader.fadeTo(activeSection);
     this.setState(state);
     this.setupTimings();
-  }
+  };
 
   toggleKinect = () => {
     this.setState({ allowKinectInput: !this.state.allowKinectInput });
-  }
+  };
 
   componentWillUpdate () {
     // This might be a horrible idea.
     this.broadcastWorldState();
-  }
+  };
 
   broadcastWorldState = () => {
     this.rsend('/world-state', [JSON.stringify(this.state)]);
-  }
+  };
 
   render() {
     let self = this;
@@ -310,11 +310,11 @@ export default class ConductorPanel extends React.Component {
         </div>
 
         <div className="group-list">
-          {this.state.groups.map(g => {
+          {this.state.groups.map((g,i) => {
             let section = g.sections[g.activeSection];
             let gesture = section.sequences[g.activeSequence].gesture;
             return (
-              <div className="group-info">
+              <div key={i} className="group-info">
                 <h2>Group {g.name}: {gesture} (Section {g.activeSection}, Sequence {g.activeSequence})</h2>
                 <button
                   name="group-sequence-dec"
@@ -330,6 +330,6 @@ export default class ConductorPanel extends React.Component {
         </div>
       </div>
     )
-  }
+  };
 
 }
