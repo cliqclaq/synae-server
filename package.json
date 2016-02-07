@@ -2,7 +2,9 @@
   "name": "synae-server",
   "version": "0.0.0",
   "description": "Rhizome-powered gestural-trigger spatial audience participation",
-  "pre-commit": [ "cs:check" ],
+  "pre-commit": [
+    "cs:check"
+  ],
   "scripts": {
     "cs:check": "jscs .",
     "cs:fix": "jscs --fix .",
@@ -15,7 +17,7 @@
     "dns": "bin/dns",
     "start": "npm run prod && DEBUG=* npm run server",
     "convert": "mkdir -p public/audio/mp3; for file in public/audio/wav/*; do ffmpeg -i \"$file\" -codec:a libmp3lame -qscale:a 0 public/audio/mp3/`basename -s .wav \"$file\"`.mp3; done",
-    "test": "tape -r babel-register tests/*.spec.js"
+    "test": "tape -r babel-register tests/*.spec.js | tap-spec"
   },
   "engines": {
     "npm": "3.x"
@@ -55,6 +57,8 @@
     "jscs": "^2.9.0",
     "pre-commit": "^1.1.2",
     "react-addons-test-utils": "^0.14.7",
+    "sinon": "^1.17.3",
+    "tap-spec": "^4.1.1",
     "tape": "^4.4.0",
     "watchify": "^3.4.0"
   }
