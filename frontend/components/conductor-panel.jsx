@@ -29,13 +29,14 @@ export default class ConductorPanel extends React.Component {
   xfader = null;
 
   state = {
-    groups: this.props.perfConfig.groups,
-    buffers: [],
-    allowKinectInput: true,
-    timingHasStarted: false,
-    sectionTimers: {
-      // will have group-id => timeoutid
+    performance: this.props.perfConfig,
+    world: {
+      activeSection: 0,
+      activeSequence: 0,
     },
+    buffers: [],
+    timingHasStarted: false,
+    sectionTimer: null,
   };
 
   constructor (props) {
@@ -43,6 +44,7 @@ export default class ConductorPanel extends React.Component {
 
     // Prevent overloading the network.
     this.broadcastWorldState = debounce(this.broadcastWorldState, 20);
+    this.broadcastPerformanceConfig = debounce(this.broadcastPerformanceConfig, 20);
     // This is such a super HACK to prevent race conditions with storing
     // the sequence state individually but mutating as a whole.
     this.setupTimings = debounce(this.setupTimings, 20);
@@ -53,6 +55,7 @@ export default class ConductorPanel extends React.Component {
 
     this.rconnected(() => {
       // Immediately send world state to resync in the event of a crash
+      this.broadcastPerformanceConfig();
       this.broadcastWorldState();
       this.rsend('/sys/subscribe', ['/kinect-events']);
       this.rsend('/sys/subscribe', ['/performer-events']);
@@ -71,24 +74,7 @@ export default class ConductorPanel extends React.Component {
         }
 
         if (args[0] === 'next-sequence') {
-          this.nextSequenceForAll();
-        }
-      }
-
-      if (address === '/kinect-events') {
-        if (
-          !this.state.allowKinectInput
-          || !this.state.buffers.length) return;
-        // stand, left, right
-        switch (args[0]) {
-          case 'left':
-          case 'head':
-          case 'upwards-point':
-            this.nextSection();
-            break;
-          //case 'right':
-          //  this.prevSection();
-          //  break;
+          this.nextSequence();
         }
       }
     });
@@ -112,7 +98,7 @@ export default class ConductorPanel extends React.Component {
     let blanker = () => {
       return new Promise((resolve, reject) => {
         // Gross. Make a blank audio buffer to prevent premature audio changes.
-        let duration = this.state.groups[0].sections[0].timings[0];
+        let duration = this.state.performance.groups[0].sections[0].timings[0];
         let { sampleRate } = actx;
         let buffer = actx.createBuffer(1, duration, sampleRate);
         resolve(buffer);
@@ -140,10 +126,9 @@ export default class ConductorPanel extends React.Component {
 
   startPerformance = () => {
     let { state } = this;
-    state.groups.forEach(g => {
-      g.activeSection = 0;
-      g.activeSequence = 0;
-    });
+
+    state.world.activeSection = 0;
+    state.world.activeSequence = 0;
 
     state.timingHasStarted = true;
 
@@ -162,110 +147,86 @@ export default class ConductorPanel extends React.Component {
   };
 
   setupTimings = () => {
-    let { state } = this;
-    state.groups.forEach(g => {
-      let section = g.sections[g.activeSection];
-      if (section.timings && section.timings[g.activeSequence]) {
-        let duration = section.timings[g.activeSequence];
-        if (state.sectionTimers[g.id]) {
-          dbg('clearing timeout', g.id);
-          clearTimeout(state.sectionTimers[g.id]);
-        }
+    let { state, state: { performance: { groups }, world } } = this;
+    let { activeSection, activeSequence } = world;
 
-        dbg('setting timeout', g.id, duration);
-        state.sectionTimers[g.id] = setTimeout(() => {
-          dbg('firing timeout', g.id, duration);
-          if (g.activeSection === 0) {
-            dbg('special case: welcome');
-            this.nextSection();
-          } else {
-            this.changeSequenceBy(g.id, 1);
-          }
-        }, duration);
+    if (state.sectionTimer !== null) {
+      dbg('clearing timeout', state.sectionTimer);
+      clearTimeout(state.sectionTimer);
+      state.sectionTimer = null;
+    }
+
+    let duration = groups[0].sections[activeSection].timings[activeSequence];
+
+    if (!duration) return;
+
+    dbg('setting timeout, section %d, duration %d', activeSection, duration);
+    state.sectionTimer = setTimeout(() => {
+      dbg('firing timeout', activeSection, duration);
+      if (activeSection === 0) {
+        dbg('special case: welcome');
+        this.nextSection();
+      } else {
+        this.nextSequence();
       }
-    });
+    }, duration);
+    dbg('set timeout, ref %d', state.sectionTimer);
+
     this.setState(state);
   };
 
-  changeSequenceBy (groupId, plusOrMinus) {
+  nextSequence = () => {
     let { state } = this;
-    state.groups.forEach(g => {
-      if (g.id !== groupId) return;
+    let { activeSection, activeSequence } = state.world;
 
-      let section = g.sections[g.activeSection];
-      let { sequences } = section;
+    let group0 = this.state.performance.groups[0];
+    let maxSequenceIndex = group0.sections[activeSection].sequences.length - 1;
 
-      dbg('sequence change', g.id, g.activeSequence);
+    dbg('sequence change', activeSequence);
 
-      g.activeSequence += plusOrMinus;
+    activeSequence += 1;
 
-      if (g.activeSequence > sequences.length - 1) {
-        g.activeSequence = 0;
-        g.activeSection += 1;
-        this.xfader.fadeTo(g.activeSection);
-      }
+    if (activeSequence > maxSequenceIndex) {
+      this.nextSection();
+      return;
+    }
 
-      if (g.activeSequence < 0) {
-        g.activeSequence = 0;
-        g.activeSection -= 1;
-        this.xfader.fadeTo(g.activeSection);
-      }
+    state.world.activeSection = activeSection;
+    state.world.activeSequence = activeSequence;
 
-      if (
-        g.activeSection > g.sections.length - 1
-        || g.activeSection < 0
-      ) {
-        g.activeSection = 0;
-        this.xfader.fadeTo(g.activeSection);
-      }
-    });
     this.setState(state);
     this.setupTimings();
   };
 
-  nextSequenceForAll () {
-    let { state } = this;
-    state.groups.forEach(g => {
-      this.changeSequenceBy(g.id, 1);
-    });
-    this.setState(state);
-  };
-
   nextSection = () => {
-    let { state } = this;
-    state.groups.forEach(g => {
-      g.activeSection += 1;
-      g.activeSequence = 0;
+    let { activeSection, activeSequence } = this.state.world;
+    let maxSectionIndex = this.state.performance.groups[0].sections.length - 1;
 
-      if (g.activeSection > g.sections.length - 1) {
-        g.activeSection = 0;
-      }
-    });
+    activeSection += 1;
+    activeSequence = 0;
 
-    let activeSection = state.groups[0].activeSection;
+    if (activeSection > maxSectionIndex) {
+      activeSection = 0;
+    }
+
     this.xfader.fadeTo(activeSection);
-    this.setState(state);
+    this.setState({ world: { activeSection, activeSequence } });
     this.setupTimings();
   };
 
   prevSection = () => {
-    let { state } = this;
-    state.groups.forEach(g => {
-      g.activeSection -= 1;
-      g.activeSequence = 0;
+    let { activeSection, activeSequence } = this.state.world;
 
-      if (g.activeSection < 0) {
-        g.activeSection = 0;
-      }
-    });
-    let activeSection = state.groups[0].activeSection;
+    activeSection -= 1;
+    activeSequence = 0;
+
+    if (activeSection < 0) {
+      activeSection = 0;
+    }
+
     this.xfader.fadeTo(activeSection);
-    this.setState(state);
+    this.setState({ world: { activeSection, activeSequence } });
     this.setupTimings();
-  };
-
-  toggleKinect = () => {
-    this.setState({ allowKinectInput: !this.state.allowKinectInput });
   };
 
   componentWillUpdate () {
@@ -274,7 +235,15 @@ export default class ConductorPanel extends React.Component {
   };
 
   broadcastWorldState = () => {
-    this.rsend('/world-state', [JSON.stringify(this.state)]);
+    const payload = this.state.world;
+    dbg('broadcast:world-state', payload);
+    this.rsend('/world-state', [JSON.stringify(payload)]);
+  };
+
+  broadcastPerformanceConfig = () => {
+    const payload = this.state.performance;
+    dbg('broadcast:performance-config', payload);
+    this.rsend('/performance-config', [JSON.stringify(payload)]);
   };
 
   render () {
@@ -288,11 +257,14 @@ export default class ConductorPanel extends React.Component {
           <button
             disabled={loading || this.state.timingHasStarted}
             className='button button-big'
-            onClick={this.startPerformance}>Start Performance</button>
+            onClick={this.startPerformance}
+          >Start Performance</button>
           <button
             disabled={loading}
             className='button button-big bg-red'
-            onClick={this.mutePerformance}>MASTER MUTE</button>
+            onClick={this.mutePerformance}
+          >MASTER MUTE</button>
+            {loading && <span>Loading...</span>}
         </div>
         <div>
           <button
@@ -305,37 +277,26 @@ export default class ConductorPanel extends React.Component {
             className='button button-big'
             onClick={this.nextSection}
           >Next Section</button>
-          {loading && <span>Loading...</span>}
         </div>
-
         <div>
-          <label>
-            Allow Kinect Section Changes:
-            <input
-              type='checkbox'
-              checked={this.state.allowKinectInput}
-              onChange={this.toggleKinect} />
-          </label>
+          <button
+            disabled={loading}
+            className='button button-big'
+            onClick={this.nextSequence}
+          >Next Sequence</button>
         </div>
 
         <div className="group-list">
-          {this.state.groups.map((g, i) => {
-            let section = g.sections[g.activeSection];
-            let gesture = section.sequences[g.activeSequence].gesture;
+          {this.state.performance.groups.map((g, i) => {
+            let { activeSection, activeSequence } = this.state.world;
+            let section = g.sections[activeSection];
+            let gesture = section.sequences[activeSequence].gesture;
             return (
               <div key={i} className="group-info">
                 <h2>
                   Group {g.name}:
-                  {gesture} (Section {g.activeSection}, Sequence {g.activeSequence})
+                  {gesture} (Section {activeSection}, Sequence {activeSequence})
                 </h2>
-                <button
-                  name="group-sequence-dec"
-                  onClick={this.changeSequenceBy.bind(this, g.id, -1)}
-                  >Prev Sequence</button>
-                <button
-                  name="group-sequence-inc"
-                  onClick={this.changeSequenceBy.bind(this, g.id, 1)}
-                  >Next Sequence</button>
               </div>
             );
           })}

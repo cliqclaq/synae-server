@@ -36,6 +36,7 @@ export default class AudiencePanel extends React.Component {
 
   state = {
     groupId: null,
+    performance: null,
     world: null,
     actx: null,
   };
@@ -48,19 +49,22 @@ export default class AudiencePanel extends React.Component {
     Object.assign(this, { rsend, rrecv, rconnected, rhizome });
 
     this.rconnected(() => {
+      this.rsend('/sys/subscribe', ['/performance-config']);
       this.rsend('/sys/subscribe', ['/world-state']);
-      this.rsend('/sys/subscribe', ['/client/' + this.props.rid]);
       // Retrieve world state once connected.
+      this.rsend('/sys/resend', ['/performance-config']);
       this.rsend('/sys/resend', ['/world-state']);
     });
 
     this.rrecv((address, args) => {
-      if (address === '/client/' + this.props.rid) {
-        this.setState({ world: JSON.parse(args[0]) });
+      if (address === '/world-state') {
+        const world = JSON.parse(args[0]);
+        this.setState({ world });
       }
 
-      if (address === '/world-state') {
-        this.setState({ world: JSON.parse(args[0]) });
+      if (address === '/performance-config') {
+        const performance = JSON.parse(args[0]);
+        this.setState({ performance });
       }
     });
   };
@@ -99,16 +103,17 @@ export default class AudiencePanel extends React.Component {
     </div>;
 
     let self = this;
-    let hasWorldData = !!this.state.world;
-    let syncing = !hasWorldData ? 'Waiting for Conductor...' : null;
-    let group = hasWorldData
-      ? this.state.world.groups.filter(g => g.id === this.state.groupId)[0]
+    let hasPerfomanceData = !!this.state.performance;
+    let syncing = !hasPerfomanceData ? 'Waiting for Conductor...' : null;
+    let { performance, world } = this.state;
+    let group = hasPerfomanceData
+      ? performance.groups.filter(g => g.id === this.state.groupId)[0]
       : null;
     let section = group
-      ? group.sections[group.activeSection]
+      ? group.sections[world.activeSection]
       : null;
     let sequence = section
-      ? section.sequences[group.activeSequence]
+      ? section.sequences[world.activeSequence]
       : null;
     let Instrument = sequence
       ? Instruments[sequence.gesture]
@@ -117,7 +122,7 @@ export default class AudiencePanel extends React.Component {
     return (
       <div className="audience">
         {
-          !hasWorldData
+          !hasPerfomanceData
           ? <div>
               <h1 style={{ textAlign: 'center' }}>{syncing}</h1>
             </div>
@@ -130,7 +135,7 @@ export default class AudiencePanel extends React.Component {
               iconUrl={sequence.iconUrl}
               minimumForce={sequence.minimumForce} /></div>
             : <GroupChooser
-              groups={this.state.world.groups}
+              groups={this.state.performance.groups}
               onGroupSelect={this.onGroupSelect} />
         }
       </div>

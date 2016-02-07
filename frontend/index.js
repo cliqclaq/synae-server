@@ -16,7 +16,11 @@ import SensorDumperPanel from './components/sensordumper-panel.jsx';
 import PerformerPanel from './components/performer-panel.jsx';
 
 import perfConfig from './performance-config';
+import perfValidator from './performance-validator';
 import rhizome from '../rhizome-server-repack/browser';
+
+// Ensure perf is valid.
+perfValidator(perfConfig);
 
 // polyfill
 Object.assign = Object.assign || objectAssign;
