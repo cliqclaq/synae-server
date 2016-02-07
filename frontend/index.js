@@ -417,7 +417,7 @@ rhizome.start(() => {
   initialize();
 });
 
-function initialize() {
+function initialize () {
 
   let commonProps = {
     perfConfig,
@@ -450,14 +450,14 @@ function initialize() {
     dbg('reconnecting...');
   });
 
-  function rrecv(cb) {
+  function rrecv (cb) {
     rhizome.on('message', (...args) => {
       dbgm(...args);
       cb(...args);
     });
   }
 
-  function rconnected(cb) {
+  function rconnected (cb) {
     rhizome.on('connected', (...args) => {
       dbg('connected');
       cb(...args);

@@ -174,7 +174,7 @@ if (kinect.open()) {
   process.exit(1);
 }
 
-function exit(int) {
+function exit (int) {
   console.log('\n[rhizome] stopping...');
   client.stop(function () {
     console.log('[help] bye bye');
@@ -182,7 +182,7 @@ function exit(int) {
   });
 }
 
-function find(bodies) {
+function find (bodies) {
   var out = null;
   bodies = bodies || [];
   bodies.forEach(function (body) {

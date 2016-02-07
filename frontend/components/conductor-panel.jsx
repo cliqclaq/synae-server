@@ -38,7 +38,7 @@ export default class ConductorPanel extends React.Component {
     },
   };
 
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     // Prevent overloading the network.
@@ -277,7 +277,7 @@ export default class ConductorPanel extends React.Component {
     this.rsend('/world-state', [JSON.stringify(this.state)]);
   };
 
-  render() {
+  render () {
     let self = this;
     let loading = !this.state.buffers.length;
     return (

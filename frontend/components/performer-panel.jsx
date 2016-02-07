@@ -50,7 +50,7 @@ export default class PerformerPanel extends React.Component {
     this.rsend('/performer-events', [msg]);
   };
 
-  render() {
+  render () {
     let {
       isTouching, section, sequence,
     } = this.state;

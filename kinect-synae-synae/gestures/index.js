@@ -17,11 +17,11 @@ var onLeft = function () {};
 
 var onPoint = function () {};
 
-exports.onLeftGesture = function onLeftGesture(cb) { onLeft = cb; };
+exports.onLeftGesture = function onLeftGesture (cb) { onLeft = cb; };
 
-exports.onPointGesture = function onPointGesture(cb) { onPoint = cb; };
+exports.onPointGesture = function onPointGesture (cb) { onPoint = cb; };
 
-exports.updateLeftGesture = function updateLeftGesture(left) {
+exports.updateLeftGesture = function updateLeftGesture (left) {
   nowLeft = +new Date;
   var diffY = (left.hand.cameraY - prevLeft.y[0]);
 
@@ -44,7 +44,7 @@ exports.updateLeftGesture = function updateLeftGesture(left) {
   }
 };
 
-exports.updatePointGesture = function updatePointGesture(hand, elbow, wrist, head, handState) {
+exports.updatePointGesture = function updatePointGesture (hand, elbow, wrist, head, handState) {
   nowPoint = +new Date;
   var forearm = Math.sqrt(Math.pow((elbow.cameraX - wrist.cameraX), 2) + Math.pow(elbow.cameraY - wrist.cameraY, 2)) / 2;
   if (hand.cameraY >= (head.cameraY + forearm) && handState === 4) {

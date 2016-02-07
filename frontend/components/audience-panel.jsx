@@ -40,7 +40,7 @@ export default class AudiencePanel extends React.Component {
     actx: null,
   };
 
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     // Shortcuts to rhizome callbacks
@@ -80,7 +80,7 @@ export default class AudiencePanel extends React.Component {
     // TODO: tell the server? just for visualization purposes
   };
 
-  render() {
+  render () {
     let hasKickedAudio = !!this.state.actx;
 
     if (!hasKickedAudio) return <div style={{

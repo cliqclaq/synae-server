@@ -7,7 +7,7 @@ export default function(cb) {
   window.addEventListener('devicemotion', handle, true);
   return disconnect;
 
-  function handle(e) {
+  function handle (e) {
     if (e.interval > 0) {
       if (dbg.enabled) {
         // Normally would not care, but JSON.stringify will be costly.
@@ -20,7 +20,7 @@ export default function(cb) {
     }
   }
 
-  function disconnect() {
+  function disconnect () {
     window.removeEventListener('devicemotion', handle, true);
     dbg('disconnected');
   }

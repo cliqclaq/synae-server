@@ -1,4 +1,4 @@
-export default function motionsToSeries(motions, opt_out) {
+export default function motionsToSeries (motions, opt_out) {
     return motions.reduce((ts, m) => {
       ts.x.push(m.acceleration.x);
       ts.y.push(m.acceleration.y);

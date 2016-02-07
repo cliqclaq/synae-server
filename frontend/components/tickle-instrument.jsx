@@ -38,11 +38,11 @@ export default class extends React.Component {
     this.playSound = throttle(this.playSound.bind(this), 1000);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate (nextProps, nextState) {
     return !nextState.isLoading;
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let { actx } = this.props;
     this.gain = actx.createGain();
     this.gain.connect(actx.destination);
@@ -55,7 +55,7 @@ export default class extends React.Component {
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     var mount = React.findDOMNode(this);
     var width = mount.getBoundingClientRect().width;
     var height = mount.getBoundingClientRect().height;
@@ -65,7 +65,7 @@ export default class extends React.Component {
     var d3nodes;
     var sim;
 
-    function tick() {
+    function tick () {
       d3nodes = svg.selectAll('.bubble')
         .data(bubbles)
         .attr('cx', d => d.x)
@@ -121,7 +121,7 @@ export default class extends React.Component {
     }, DT);
   }
 
-  playSound() {
+  playSound () {
     let { actx } = this.props;
     let sample = actx.createBufferSource();
     sample.buffer = this.state.buffer;
@@ -131,7 +131,7 @@ export default class extends React.Component {
     sample.start();
   }
 
-  render() {
+  render () {
     return (
       <div style={{
           backgroundImage: 'url(' + this.props.iconUrl + ')',

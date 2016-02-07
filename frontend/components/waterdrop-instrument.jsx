@@ -47,7 +47,7 @@ export default class extends React.Component {
     this.boxWidth = Math.floor(Math.min(this.cvs.width, this.cvs.height) / DENSITY);
   };
 
-  init() {
+  init () {
     let cvs = this.cvs = React.findDOMNode(this).querySelector('canvas');
     let ctx = this.ctx = cvs.getContext('2d');
 
@@ -228,7 +228,7 @@ export default class extends React.Component {
     this.playSound();
   };
 
-  playSound() {
+  playSound () {
     let { actx } = this.props;
     let sample = actx.createBufferSource();
     sample.buffer = this.state.buffer;
@@ -265,7 +265,7 @@ export default class extends React.Component {
   }
 }
 
-function debugDrawConstraints(ctx, constraints) {
+function debugDrawConstraints (ctx, constraints) {
   ctx.lineStyle = '2px black solid';
   for (var i = 0; i < constraints.length; i++) {
     var cdata = constraints[i];
@@ -275,7 +275,7 @@ function debugDrawConstraints(ctx, constraints) {
   }
 }
 
-function debugDrawPoints(ctx, points) {
+function debugDrawPoints (ctx, points) {
   for (var i = 0; i < points.length; i++) {
     var cpos = points[i].cpos;
     ctx.beginPath();
@@ -284,7 +284,7 @@ function debugDrawPoints(ctx, points) {
   }
 }
 
-function huemaster(gradations, s, l, a) {
+function huemaster (gradations, s, l, a) {
   var hexes = [];
   var circle = gradations;
 
@@ -301,7 +301,7 @@ function huemaster(gradations, s, l, a) {
 
 // https://github.com/kamicane/rgb/blob/76045440a8e9416d828a0c44c6d9009fdb674253/index.js#L57
 
-function HUEtoRGB(p, q, t) {
+function HUEtoRGB (p, q, t) {
   if (t < 0) t += 1;
   if (t > 1) t -= 1;
   if (t < 1 / 6) return p + (q - p) * 6 * t;
@@ -310,7 +310,7 @@ function HUEtoRGB(p, q, t) {
   return p;
 }
 
-function HSLtoRGB(h, s, l, a) {
+function HSLtoRGB (h, s, l, a) {
   var r, b, g;
   if (a == null || a === '') a = 1;
   h = parseFloat(h) / 360;

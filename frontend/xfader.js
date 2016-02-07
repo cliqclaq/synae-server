@@ -1,5 +1,5 @@
 
-export default function xfader(buffers, actx, output, transitionTime) {
+export default function xfader (buffers, actx, output, transitionTime) {
 
   let gains = buffers.map(b => {
     let gain = actx.createGain();

@@ -7,7 +7,7 @@ export default class extends React.Component {
     onGroupSelect: React.PropTypes.func.isRequired,
   };
 
-  render() {
+  render () {
     return (
       <div className='flex flex-column'>
         <h1 style={{ maxHeight:'10vh' }} className='px2'>Where Are You?</h1>

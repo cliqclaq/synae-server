@@ -6,6 +6,8 @@
   "safeContextKeyword": ["self"],
   "requireCamelCaseOrUpperCaseIdentifiers": false,
   "requirePaddingNewLinesBeforeLineComments": null,
+  "disallowSpacesInFunctionDeclaration": null,
+  "disallowSpacesInNamedFunctionExpression": null,
   "requireSpacesInFunctionDeclaration": {
     "beforeOpeningRoundBrace": true,
     "beforeOpeningCurlyBrace": true
