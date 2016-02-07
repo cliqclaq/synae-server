@@ -7,18 +7,21 @@
     "cs:check": "jscs .",
     "cs:fix": "jscs --fix .",
     "css": "cssnext frontend/style.css > public/bundle.css",
-    "js": "browserify -d -t [babelify] frontend/index.js -o public/bundle.js",
+    "js": "browserify -d frontend/index.js -o public/bundle.js",
     "prod": "npm run css && NODE_ENV=production npm run js && npm run optimize",
     "optimize": "uglifyjs --compress --mangle -- public/bundle.js > public/bundle.min.js && mv public/bundle.min.js public/bundle.js",
-    "js-watch": "watchify -d -t [babelify] frontend/index.js -o public/bundle.js -v",
+    "js-watch": "watchify -d frontend/index.js -o public/bundle.js -v",
     "server": "forever node_modules/.bin/rhizome config.js 2>&1 | tee -a tmp/access_error.log",
     "dns": "bin/dns",
     "start": "npm run prod && DEBUG=* npm run server",
     "convert": "mkdir -p public/audio/mp3; for file in public/audio/wav/*; do ffmpeg -i \"$file\" -codec:a libmp3lame -qscale:a 0 public/audio/mp3/`basename -s .wav \"$file\"`.mp3; done",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape -r babel-register tests/*.spec.js"
   },
   "engines": {
     "npm": "3.x"
+  },
+  "browserify": {
+    "transform": "babelify"
   },
   "author": "Drew Petersen <senofpeter@gmail.com>",
   "license": "MIT",
@@ -48,8 +51,11 @@
     "uglify-js": "^2.4.24"
   },
   "devDependencies": {
+    "babel-register": "^6.4.3",
     "jscs": "^2.9.0",
     "pre-commit": "^1.1.2",
+    "react-addons-test-utils": "^0.14.7",
+    "tape": "^4.4.0",
     "watchify": "^3.4.0"
   }
 }
