@@ -29,6 +29,7 @@ try {
 // It could be replaced with:
 // var rhizome = require('rhizome-server/lib/websockets/browser-main');
 // but that file still exposes rhizome as a global.
+rhizome._config.port = 9967;
 
 var qs = querystring.parse(window.location.search.slice(1));
 
