@@ -1,5 +1,4 @@
 public/bundle.*
-public/rhizome-browser.js
 node_modules
 tmp
 **/.DS_Store

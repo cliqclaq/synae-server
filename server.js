@@ -1,6 +1,8 @@
 'use strict';
 
-let Rhizome = require('./rhizome-server-repack');
+require('localenv');
+
+let createRhizome = require('./rhizome-server-repack');
 let cluster = require('cluster');
 let numCpus = require('os').cpus().length;
 let debug = require('debug');
@@ -8,7 +10,7 @@ let debug = require('debug');
 const wl = debug('worker');
 const sl = debug('server');
 
-const HTTP_PORT = 9966;
+const HTTP_PORT = Number(process.env.HTTP_PORT);
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -16,9 +18,9 @@ const HTTP_PORT = 9966;
 // returns a simple object to start the rhizome servers
 //
 ///////////////////////////////////////////////////////////////////////////////
-let rhizome = Rhizome({
-  wssPort: 9967, // should be different than http port
-  oscPort: 9000,
+let rhizome = createRhizome({
+  wssPort: Number(process.env.WSS_PORT), // should be different than http port
+  oscPort: Number(process.env.OSC_PORT),
   outputDir: __dirname + '/tmp',
 });
 

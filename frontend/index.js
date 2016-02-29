@@ -1,3 +1,5 @@
+// required for rhizome
+
 import './vendor/AudioContextMonkeyPatch';
 import objectAssign from 'object-assign';
 
@@ -14,6 +16,7 @@ import SensorDumperPanel from './components/sensordumper-panel.jsx';
 import PerformerPanel from './components/performer-panel.jsx';
 
 import perfConfig from './performance-config';
+import rhizome from '../rhizome-server-repack/browser';
 
 // polyfill
 Object.assign = Object.assign || objectAssign;
@@ -29,7 +32,9 @@ try {
 // It could be replaced with:
 // var rhizome = require('rhizome-server/lib/websockets/browser-main');
 // but that file still exposes rhizome as a global.
-rhizome._config.port = 9967;
+// currently, rhizome is still a global and the repack returns
+// window.rhizome.
+rhizome._config.port = Number(process.env.WSS_PORT);
 
 var qs = querystring.parse(window.location.search.slice(1));
 
@@ -64,7 +69,8 @@ if (!rhizome.isSupported()) {
 
 // TODO: probably need to do an audio format check here as well...
 
-rhizome.start(() => {
+rhizome.start((err) => {
+  dbg(err);
   dbg('started', rhizome.id);
 
   // Phone home to be able to troubleshoot afterwards.
