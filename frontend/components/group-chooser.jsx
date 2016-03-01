@@ -18,7 +18,11 @@ export default class extends React.Component {
               key={this.props.groups[1].id}
               type='button'
               className='button button-big group-chooser-btn'
-              style={{ color: this.props.groups[1].color, border: '1px solid #ddd', backgroundColor: 'transparent' }}
+              style={{
+                color: this.props.groups[1].color,
+                border: '1px solid #ddd',
+                backgroundColor: 'transparent',
+              }}
               onClick={this.props.onGroupSelect.bind(this, this.props.groups[1].id)}
               data-groupid={this.props.groups[1].id}
             >{this.props.groups[1].name}</button>
@@ -28,7 +32,11 @@ export default class extends React.Component {
               key={this.props.groups[0].id}
               type='button'
               className='button button-big group-chooser-btn'
-              style={{ color: this.props.groups[0].color, border: '1px solid #ddd', backgroundColor: 'transparent' }}
+              style={{
+                color: this.props.groups[0].color,
+                border: '1px solid #ddd',
+                backgroundColor: 'transparent',
+              }}
               onClick={this.props.onGroupSelect.bind(this, this.props.groups[0].id)}
               data-groupid={this.props.groups[0].id}
             >{this.props.groups[0].name}</button>
@@ -40,7 +48,11 @@ export default class extends React.Component {
               key={this.props.groups[2].id}
               type='button'
               className='button button-big group-chooser-btn'
-              style={{ color: this.props.groups[2].color, border: '1px solid #ddd', backgroundColor: 'transparent' }}
+              style={{
+                color: this.props.groups[2].color,
+                border: '1px solid #ddd',
+                backgroundColor: 'transparent',
+              }}
               onClick={this.props.onGroupSelect.bind(this, this.props.groups[2].id)}
               data-groupid={this.props.groups[2].id}
             >{this.props.groups[2].name}</button>
@@ -50,7 +62,11 @@ export default class extends React.Component {
               key={this.props.groups[3].id}
               type='button'
               className='button button-big group-chooser-btn'
-              style={{ color: this.props.groups[3].color, border: '1px solid #ddd', backgroundColor: 'transparent' }}
+              style={{
+                color: this.props.groups[3].color,
+                border: '1px solid #ddd',
+                backgroundColor: 'transparent',
+              }}
               onClick={this.props.onGroupSelect.bind(this, this.props.groups[3].id)}
               data-groupid={this.props.groups[3].id}
             >{this.props.groups[3].name}</button>

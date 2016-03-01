@@ -259,7 +259,13 @@ export default class extends React.Component {
           backgroundSize: '50%',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '50% 66%',
-        }}><h1 onClick={this.touchClick} onTouchEnd={this.touchClick} className='center'>{this.props.instructions}</h1></div>
+        }}>
+          <h1
+            onClick={this.touchClick}
+            onTouchEnd={this.touchClick}
+            className='center'
+          >{this.props.instructions}</h1>
+        </div>
         </div>
       : <div><h1 style={{ textAlign: 'center' }}>Fetching...</h1></div>;
   }

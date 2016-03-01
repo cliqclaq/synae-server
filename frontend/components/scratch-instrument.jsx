@@ -40,7 +40,8 @@ export default class extends React.Component {
       // let majorityAreNegative = ys.filter(y => y <= -0.1).length > ys.length / 2;
 
       //let average = ys.reduce((sum, y) => { return sum += y }) / ys.length;
-      let average = motions.reduce((sum, motion) => sum + motion.acceleration.y, 0) / motions.length;
+      let { y: axy } = motion.acceleration;
+      let average = motions.reduce((sum, motion) => sum + axy, 0) / motions.length;
 
       //if (motions.length > 5 && majorityAreNegative) {
       if (average > 1.8) {

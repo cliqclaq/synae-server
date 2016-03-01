@@ -295,8 +295,16 @@ export default class ConductorPanel extends React.Component {
             onClick={this.mutePerformance}>MASTER MUTE</button>
         </div>
         <div>
-          <button disabled={loading} className='button button-big' onClick={this.prevSection}>Previous Section</button>
-          <button disabled={loading} className='button button-big' onClick={this.nextSection}>Next Section</button>
+          <button
+            disabled={loading}
+            className='button button-big'
+            onClick={this.prevSection}
+          >Previous Section</button>
+          <button
+            disabled={loading}
+            className='button button-big'
+            onClick={this.nextSection}
+          >Next Section</button>
           {loading && <span>Loading...</span>}
         </div>
 
@@ -316,7 +324,10 @@ export default class ConductorPanel extends React.Component {
             let gesture = section.sequences[g.activeSequence].gesture;
             return (
               <div key={i} className="group-info">
-                <h2>Group {g.name}: {gesture} (Section {g.activeSection}, Sequence {g.activeSequence})</h2>
+                <h2>
+                  Group {g.name}:
+                  {gesture} (Section {g.activeSection}, Sequence {g.activeSequence})
+                </h2>
                 <button
                   name="group-sequence-dec"
                   onClick={this.changeSequenceBy.bind(this, g.id, -1)}

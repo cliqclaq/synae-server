@@ -10,7 +10,13 @@ test('<AudiencePanel />: no audio context', t => {
   let renderer = createRenderer();
   let noop = () => {};
 
-  renderer.render(<AudiencePanel rconnected={noop} rrecv={noop} rsend={noop} rid='test' />);
+  renderer.render(
+    <AudiencePanel
+      rconnected={noop}
+      rrecv={noop}
+      rsend={noop}
+      rid='test' />
+  );
   let output = renderer.getRenderOutput();
 
   t.equals(output.props.children.type, 'button', 'renders a button to kick audio');
@@ -21,10 +27,23 @@ test('<AudiencePanel />: has audio context', t => {
   let renderer = createRenderer();
   let noop = () => {};
 
-  let expectedMessage = <div className='audience'><div><h1 style={{ textAlign: 'center' }}>{'Waiting for Conductor...'}</h1></div></div>;
+  let expectedMessage = (
+    <div className='audience'>
+      <div>
+        <h1 style={{ textAlign: 'center' }}>{'Waiting for Conductor...'}</h1>
+      </div>
+    </div>
+  );
   let mockedAudioContext = {};
 
-  renderer.render(<AudiencePanel actx={mockedAudioContext} rconnected={noop} rrecv={noop} rsend={noop} rid='test'/>);
+  renderer.render(
+    <AudiencePanel
+      actx={mockedAudioContext}
+      rconnected={noop}
+      rrecv={noop}
+      rsend={noop}
+      rid='test' />
+  );
   let output = renderer.getRenderOutput();
 
   t.deepEquals(output, expectedMessage, 'renders a waiting message');
@@ -38,7 +57,14 @@ test('AudiencePanel />: has data but no group', t => {
   let rrecv = sinon.spy();
   let mockedAudioContext = {};
 
-  renderer.render(<AudiencePanel actx={mockedAudioContext} rconnected={noop} rrecv={rrecv} rsend={noop} rid='test'/>);
+  renderer.render(
+    <AudiencePanel
+      actx={mockedAudioContext}
+      rconnected={noop}
+      rrecv={rrecv}
+      rsend={noop}
+      rid='test' />
+  );
 
   // simulate response for world state
   rrecv.getCall(0).args[0]('/world-state', ['{ "groups": [] }']);

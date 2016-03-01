@@ -46,7 +46,8 @@ exports.updateLeftGesture = function updateLeftGesture (left) {
 
 exports.updatePointGesture = function updatePointGesture (hand, elbow, wrist, head, handState) {
   nowPoint = +new Date;
-  var forearm = Math.sqrt(Math.pow((elbow.cameraX - wrist.cameraX), 2) + Math.pow(elbow.cameraY - wrist.cameraY, 2)) / 2;
+  var forearm = Math.sqrt(Math.pow((elbow.cameraX - wrist.cameraX), 2)
+    + Math.pow(elbow.cameraY - wrist.cameraY, 2)) / 2;
   if (hand.cameraY >= (head.cameraY + forearm) && handState === 4) {
     if (nowPoint - prevPoint >= THROTTLE) {
       onPoint();

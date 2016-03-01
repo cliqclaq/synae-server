@@ -1,5 +1,11 @@
 {
-  "excludeFiles": ["**/bundle.js", "frontend/vendor/**", "public/**", "*/node_modules/**"],
+  "excludeFiles": [
+    "**/bundle.js",
+    "frontend/vendor/**",
+    "public/**",
+    "*/node_modules/**",
+    "frontend/performance-config.js"
+  ],
   "fileExtensions": [".js", ".jsx"],
   "preset": "airbnb",
   "disallowMultipleVarDecl": null,

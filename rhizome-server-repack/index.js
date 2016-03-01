@@ -15,9 +15,11 @@ module.exports = function configure (config) {
   if (!config.wssPort) {
     throw new Error('[rhizome-repack] must specify websocket server port');
   }
+
   if (!config.oscPort) {
     throw new Error('[rhizome-repack] must specify osc server port');
   }
+
   if (!config.outputDir) {
     throw new Error('[rhizom-repack] must specify rhizome output directory path');
   }
