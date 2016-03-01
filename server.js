@@ -2,10 +2,10 @@
 
 require('localenv');
 
-let createRhizome = require('./rhizome-server-repack');
-let cluster = require('cluster');
-let numCpus = require('os').cpus().length;
-let debug = require('debug');
+const createRhizome = require('./rhizome-server-repack');
+const cluster = require('cluster');
+const numCpus = require('os').cpus().length;
+const debug = require('debug');
 
 const wl = debug('worker');
 const sl = debug('server');
@@ -18,7 +18,7 @@ const HTTP_PORT = Number(process.env.HTTP_PORT);
 // returns a simple object to start the rhizome servers
 //
 ///////////////////////////////////////////////////////////////////////////////
-let rhizome = createRhizome({
+const rhizome = createRhizome({
   wssPort: Number(process.env.WSS_PORT), // should be different than http port
   oscPort: Number(process.env.OSC_PORT),
   outputDir: __dirname + '/tmp',
@@ -51,8 +51,8 @@ if (cluster.isMaster) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 else {
-  let express = require('express');
-  let app = express();
+  const express = require('express');
+  const app = express();
 
   // logging middleware
   app.all('*/', (req, res, next) => {
