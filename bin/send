@@ -7,7 +7,7 @@ var program = require('commander');
 program
   .usage('[options] <path> [pathargs ...]')
   .option('-t, --target <hostname>', 'Connect to rhizome server at [hostname], defaults to localhost', '127.0.0.1')
-  .option('-p, --port <port>', 'Connect to rhizome websocket server at [port], defaults to 8080', 8080)
+  .option('-p, --port <port>', 'Connect to rhizome websocket server at [port], defaults to 8080', parseInt)
   .parse(process.argv)
 
 if (!program.args.length) {
