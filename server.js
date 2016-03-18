@@ -64,8 +64,17 @@ if (cluster.isMaster) {
     });
 
     client.on('message', (address, args) => {
-      if (address !== '/fiberlamp') return;
-      const msg = new osc.Message(...[address, ...args]);
+      if (address.indexOf('/fiberlamp') !== 0) return;
+
+      /*
+      /change r g b duration(s)
+      /color r g b
+      /heartbeat r g b t
+      /black
+      /noise
+      */
+
+      const msg = new osc.Message(...[address.replace('/fiberlamp', ''), ...args]);
       sl('sending %o', msg);
       fiberlamp.send(msg);
     });
