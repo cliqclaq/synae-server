@@ -51,11 +51,12 @@ export default class extends React.Component {
     binaryXHR(this.props.sample, (err, data) => {
       actx.decodeAudioData(data, b => {
         this.setState({ buffer: b, isLoading: false });
+        this.initializeTickles();
       });
     });
   }
 
-  componentDidUpdate () {
+  initializeTickles () {
     var mount = React.findDOMNode(this);
     var width = mount.getBoundingClientRect().width;
     var height = mount.getBoundingClientRect().height;

@@ -133,7 +133,7 @@ export default class AudiencePanel extends React.Component {
               <h1 style={{ textAlign: 'center' }}>{syncing}</h1>
             </div>
           : group
-            ? <AudienceIntent onIntentChosen={this.chooseIntent} active={false}>
+            ? <AudienceIntent onIntentChosen={this.chooseIntent} active={sequence !== null}>
                 <Instrument
                 sample={sequence.sample}
                 instructions={sequence.instructions}

@@ -6,8 +6,7 @@ const button = {
   width: 50,
   height: 50,
   position: 'fixed',
-  transition: 'opacity 300ms ease',
-  opactiy: 1,
+  zIndex: 1,
 };
 
 export default class AudienceIntent extends React.Component {
@@ -17,38 +16,40 @@ export default class AudienceIntent extends React.Component {
     onIntentChosen: React.PropTypes.func.isRequired,
   };
 
-  chooseIntent (id) {
+  chooseIntent (id, ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
     this.props.onIntentChosen(id);
   };
 
   render () {
     let tlstyle = Object.assign({
       top: 0, left: 0,
-      opacity: this.props.active ? 1 : 0,
+      display: this.props.active ? 'visible' : 'none',
     }, button);
 
     let trstyle = Object.assign({
       top: 0, right: 0,
-      opacity: this.props.active ? 1 : 0,
+      display: this.props.active ? 'visible' : 'none',
     }, button);
 
     let blstyle = Object.assign({
       bottom: 0, left: 0,
-      opacity: this.props.active ? 1 : 0,
+      display: this.props.active ? 'visible' : 'none',
     }, button);
 
     let brstyle = Object.assign({
       bottom: 0, right: 0,
-      opacity: this.props.active ? 1 : 0,
+      display: this.props.active ? 'visible' : 'none',
     }, button);
 
     return (
       <div>
-        <div onClick={this.chooseIntent.bind(this, '1')} className='bg-red' style={tlstyle}></div>
-        <div onClick={this.chooseIntent.bind(this, '2')} className='bg-blue' style={trstyle}></div>
+        <button onClick={this.chooseIntent.bind(this, '1')} className='btn bg-red' style={tlstyle}></button>
+        <button onClick={this.chooseIntent.bind(this, '2')} className='btn bg-blue' style={trstyle}></button>
         { this.props.children }
-        <div onClick={this.chooseIntent.bind(this, '3')} className='bg-yellow' style={blstyle}></div>
-        <div onClick={this.chooseIntent.bind(this, '4')} className='bg-green' style={brstyle}></div>
+        <button onClick={this.chooseIntent.bind(this, '3')} className='btn bg-yellow' style={blstyle}></button>
+        <button onClick={this.chooseIntent.bind(this, '4')} className='btn bg-green' style={brstyle}></button>
       </div>
     );
   };
