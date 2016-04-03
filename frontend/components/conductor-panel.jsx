@@ -287,22 +287,22 @@ export default class ConductorPanel extends React.Component {
         <div>
           <button
             disabled={loading || this.state.timingHasStarted}
-            className='button button-big'
+            className='btn btn-primary btn-big'
             onClick={this.startPerformance}>Start Performance</button>
           <button
             disabled={loading}
-            className='button button-big bg-red'
+            className='btn btn-primary btn-big bg-red'
             onClick={this.mutePerformance}>MASTER MUTE</button>
         </div>
         <div>
           <button
             disabled={loading}
-            className='button button-big'
+            className='btn btn-primary btn-primary btn-big'
             onClick={this.prevSection}
           >Previous Section</button>
           <button
             disabled={loading}
-            className='button button-big'
+            className='btn btn-primary btn-big'
             onClick={this.nextSection}
           >Next Section</button>
           {loading && <span>Loading...</span>}
