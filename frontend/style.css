@@ -1,4 +1,9 @@
 @import "basscss";
+@import "basscss-btn";
+@import "basscss-btn-primary";
+@import "basscss-btn-sizes";
+@import "basscss-colors";
+@import "basscss-background-colors";
 
 html, body {
   height: 100%;
@@ -6,6 +11,8 @@ html, body {
   padding: 0;
   background-color: #333;
   color: #eee;
+  font-size: 11px;
+  font-family: sans-serif;
 }
 
 .container,

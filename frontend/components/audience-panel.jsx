@@ -2,6 +2,8 @@ import React from 'react';
 import debug from 'debug';
 import GroupChooser from './group-chooser.jsx';
 
+
+import AudienceIntent from './audience-intent.jsx';
 import WelcomeInstrument from './welcome-instrument.jsx';
 import SilentInstrument from './silent-instrument.jsx';
 import FlutterInstrument from './flutter-instrument.jsx';
@@ -85,6 +87,10 @@ export default class AudiencePanel extends React.Component {
     // TODO: tell the server? just for visualization purposes
   };
 
+  chooseIntent = (id) => {
+    dbg(`selected intent ${id}`);
+  };
+
   render () {
     let hasKickedAudio = !!this.state.actx;
 
@@ -93,7 +99,7 @@ export default class AudiencePanel extends React.Component {
       textAlign: 'center',
     }}>
       <button
-        className='button button-big'
+        className='btn btn-primary btn-big'
         style={{
           fontSize: '64px',
           lineHeight: '64px',
@@ -127,13 +133,15 @@ export default class AudiencePanel extends React.Component {
               <h1 style={{ textAlign: 'center' }}>{syncing}</h1>
             </div>
           : group
-            ? <div><Instrument
-              sample={sequence.sample}
-              instructions={sequence.instructions}
-              actx={this.state.actx}
-              groupId={this.state.groupId}
-              iconUrl={sequence.iconUrl}
-              minimumForce={sequence.minimumForce} /></div>
+            ? <AudienceIntent onIntentChosen={this.chooseIntent} active={false}>
+                <Instrument
+                sample={sequence.sample}
+                instructions={sequence.instructions}
+                actx={this.state.actx}
+                groupId={this.state.groupId}
+                iconUrl={sequence.iconUrl}
+                minimumForce={sequence.minimumForce} />
+              </AudienceIntent>
             : <GroupChooser
               groups={this.state.performance.groups}
               onGroupSelect={this.onGroupSelect} />
