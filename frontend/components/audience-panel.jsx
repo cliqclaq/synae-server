@@ -88,7 +88,7 @@ export default class AudiencePanel extends React.Component {
   };
 
   chooseIntent = (id) => {
-    dbg(`selected intent ${id}`);
+    dbg('selected intent %d', id);
   };
 
   render () {
