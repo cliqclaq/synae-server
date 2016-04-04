@@ -2,7 +2,6 @@ import React from 'react';
 import debug from 'debug';
 import GroupChooser from './group-chooser.jsx';
 
-import waakick from '../waakick';
 import WelcomeInstrument from './welcome-instrument.jsx';
 import SilentInstrument from './silent-instrument.jsx';
 import FlutterInstrument from './flutter-instrument.jsx';
@@ -32,6 +31,7 @@ export default class AudiencePanel extends React.Component {
     rrecv: React.PropTypes.func.isRequired,
     rconnected: React.PropTypes.func.isRequired,
     rid: React.PropTypes.string.isRequired,
+    getAudioCtx: React.PropTypes.func.isRequired,
   };
 
   state = {
@@ -71,8 +71,9 @@ export default class AudiencePanel extends React.Component {
       e.stopPropagation();
     }
 
-    dbg('waakick');
-    this.setState({ actx: waakick() });
+    // dbg('waakick');
+    dbg('requesting audio context');
+    this.setState({ actx: this.props.getAudioCtx() });
   };
 
   onGroupSelect = (groupId) => {

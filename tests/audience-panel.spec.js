@@ -34,17 +34,20 @@ test('<AudiencePanel />: has audio context', t => {
       </div>
     </div>
   );
-  let mockedAudioContext = {};
+  function returnMockedAudioCtx () { return {}; }
 
   renderer.render(
     <AudiencePanel
-      actx={mockedAudioContext}
+      getAudioCtx={returnMockedAudioCtx}
       rconnected={noop}
       rrecv={noop}
       rsend={noop}
       rid='test' />
   );
   let output = renderer.getRenderOutput();
+  output.props.children.props.onClick();
+
+  output = renderer.getRenderOutput();
 
   t.deepEquals(output, expectedMessage, 'renders a waiting message');
   t.end();
@@ -55,16 +58,21 @@ test('AudiencePanel />: has data but no group', t => {
   let noop = () => {};
 
   let rrecv = sinon.spy();
-  let mockedAudioContext = {};
+  function returnMockedAudioCtx () { return {}; }
 
   renderer.render(
     <AudiencePanel
-      actx={mockedAudioContext}
+      getAudioCtx={returnMockedAudioCtx}
       rconnected={noop}
       rrecv={rrecv}
       rsend={noop}
       rid='test' />
   );
+
+  let output = renderer.getRenderOutput();
+  output.props.children.props.onClick();
+
+  output = renderer.getRenderOutput();
 
   // simulate response for world state
   rrecv.getCall(0).args[0]('/world-state', ['{ "groups": [] }']);
