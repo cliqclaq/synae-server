@@ -23,15 +23,15 @@ export default class PerformerPanel extends React.Component {
     Object.assign(this, { rsend, rrecv, rconnected, rhizome });
 
     this.rconnected(() => {
-      this.rsend('/sys/subscribe', ['/world-state']);
-      this.rsend('/sys/resend', ['/world-state']);
+      this.rsend('/sys/subscribe', ['/performance-config']);
+      this.rsend('/sys/resend', ['/performance-config']);
     });
 
     this.rrecv((addr, args) => {
-      if (addr === '/world-state') {
-        let world = JSON.parse(args[0]);
-        let section = world.groups[0].activeSection;
-        let sequence = world.groups[0].activeSequence;
+      if (addr === '/performance-config') {
+        let perf = JSON.parse(args[0]);
+        let section = perf.activeSection;
+        let sequence = perf.activeSequence;
         this.setState({ section, sequence });
       }
     });

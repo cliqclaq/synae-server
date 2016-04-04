@@ -12,8 +12,10 @@
   "safeContextKeyword": ["self"],
   "requireCamelCaseOrUpperCaseIdentifiers": false,
   "requirePaddingNewLinesBeforeLineComments": null,
+  "disallowArrayDestructuringReturn": null,
   "disallowSpacesInFunctionDeclaration": null,
   "disallowSpacesInNamedFunctionExpression": null,
+  "requireShorthandArrowFunctions": null,
   "requireSpacesInFunctionDeclaration": {
     "beforeOpeningRoundBrace": true,
     "beforeOpeningCurlyBrace": true

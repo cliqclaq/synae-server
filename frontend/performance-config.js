@@ -56,6 +56,7 @@ export default {
               instructions: 'Tap every 2 heartbeats.',
               iconUrl: 'img/TAP_BLUE.png', },
           ],
+          timings: []
         },
         {
           sequences: [
@@ -83,10 +84,9 @@ export default {
             { gesture: 'silent',
               instructions: 'Fin.', },
           ],
+          timings: []
         },
       ],
-      activeSequence: 0,
-      activeSection: 0,
     },
     {
       id: 'group-b',
@@ -137,6 +137,7 @@ export default {
               instructions: 'Tickle bubbles when you feel any muscle in your body contract.',
               iconUrl: 'img/TICKLETAP_RED.png', },
           ],
+          timings: []
         },
         {
           sequences: [
@@ -164,10 +165,9 @@ export default {
             { gesture: 'silent',
               instructions: 'Fin.', },
           ],
+          timings: []
         },
       ],
-      activeSequence: 0,
-      activeSection: 0,
     },
     {
       id: 'group-c',
@@ -221,6 +221,7 @@ export default {
               instructions: 'Tap whenever you blink.',
               iconUrl: 'img/TAP_GREEN.png', },
           ],
+          timings: []
         },
         {
           sequences: [
@@ -248,10 +249,9 @@ export default {
             { gesture: 'silent',
               instructions: 'Fin.', },
           ],
+          timings: []
         },
       ],
-      activeSequence: 0,
-      activeSection: 0,
     },
     {
       id: 'group-d',
@@ -304,6 +304,7 @@ export default {
               instructions: 'Reach upwards whenever you breathe out.',
               iconUrl: 'img/REACH_YELLOW.png', },
           ],
+          timings: []
         },
         {
           sequences: [
@@ -331,10 +332,9 @@ export default {
             { gesture: 'silent',
               instructions: 'Fin.', },
           ],
+          timings: []
         },
       ],
-      activeSequence: 0,
-      activeSection: 0,
     },
   ],
 };
