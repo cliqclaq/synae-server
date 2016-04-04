@@ -45,11 +45,27 @@ export default class AudienceIntent extends React.Component {
 
     return (
       <div>
-        <button onClick={this.chooseIntent.bind(this, '1')} className='btn bg-red' style={tlstyle}></button>
-        <button onClick={this.chooseIntent.bind(this, '2')} className='btn bg-blue' style={trstyle}></button>
+        <button
+          onClick={this.chooseIntent.bind(this, '1')}
+          className='btn bg-red'
+          style={tlstyle}
+        ></button>
+        <button
+          onClick={this.chooseIntent.bind(this, '2')}
+          className='btn bg-blue'
+          style={trstyle}
+        ></button>
         { this.props.children }
-        <button onClick={this.chooseIntent.bind(this, '3')} className='btn bg-yellow' style={blstyle}></button>
-        <button onClick={this.chooseIntent.bind(this, '4')} className='btn bg-green' style={brstyle}></button>
+        <button
+          onClick={this.chooseIntent.bind(this, '3')}
+          className='btn bg-yellow'
+          style={blstyle}
+        ></button>
+        <button
+          onClick={this.chooseIntent.bind(this, '4')}
+          className='btn bg-green'
+          style={brstyle}
+        ></button>
       </div>
     );
   };

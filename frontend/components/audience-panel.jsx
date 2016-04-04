@@ -2,7 +2,6 @@ import React from 'react';
 import debug from 'debug';
 import GroupChooser from './group-chooser.jsx';
 
-
 import AudienceIntent from './audience-intent.jsx';
 import WelcomeInstrument from './welcome-instrument.jsx';
 import SilentInstrument from './silent-instrument.jsx';
@@ -121,6 +120,9 @@ export default class AudiencePanel extends React.Component {
     let sequence = section
       ? section.sequences[world.activeSequence]
       : null;
+    let performanceStarted = section
+      ? world.activeSection !== 0
+      : false;
     let Instrument = sequence
       ? Instruments[sequence.gesture]
       : null;
@@ -133,7 +135,7 @@ export default class AudiencePanel extends React.Component {
               <h1 style={{ textAlign: 'center' }}>{syncing}</h1>
             </div>
           : group
-            ? <AudienceIntent onIntentChosen={this.chooseIntent} active={sequence !== null}>
+            ? <AudienceIntent onIntentChosen={this.chooseIntent} active={performanceStarted}>
                 <Instrument
                 sample={sequence.sample}
                 instructions={sequence.instructions}

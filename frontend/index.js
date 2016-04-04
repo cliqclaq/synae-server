@@ -106,7 +106,11 @@ function initialize () {
   } else if ('performer' in qs) {
     ReactDOM.render(<PerformerPanel {...commonProps} />, root);
   } else {
-    ReactDOM.render(<AudiencePanel {...commonProps} getAudioCtx={waakick} rid={rhizome.id} />, root);
+    ReactDOM.render(<AudiencePanel
+        {...commonProps}
+        getAudioCtx={waakick}
+        rid={rhizome.id}
+      />, root);
   }
 
   // TODO: this listener might be in a race condition since it's added
