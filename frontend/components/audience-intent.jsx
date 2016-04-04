@@ -25,22 +25,22 @@ export default class AudienceIntent extends React.Component {
   render () {
     let tlstyle = Object.assign({
       top: 0, left: 0,
-      display: this.props.active ? 'visible' : 'none',
+      display: this.props.active ? 'inline' : 'none',
     }, button);
 
     let trstyle = Object.assign({
       top: 0, right: 0,
-      display: this.props.active ? 'visible' : 'none',
+      display: this.props.active ? 'inline' : 'none',
     }, button);
 
     let blstyle = Object.assign({
       bottom: 0, left: 0,
-      display: this.props.active ? 'visible' : 'none',
+      display: this.props.active ? 'inline' : 'none',
     }, button);
 
     let brstyle = Object.assign({
       bottom: 0, right: 0,
-      display: this.props.active ? 'visible' : 'none',
+      display: this.props.active ? 'inline' : 'none',
     }, button);
 
     return (
