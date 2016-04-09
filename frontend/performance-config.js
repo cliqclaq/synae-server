@@ -53,7 +53,7 @@ export default {
               iconUrl: 'img/TAP_BLUE.png', },
             { gesture: 'waterdrop',
               sample: 'audio/mp3/water_drop.mp3',
-              instructions: 'Tap every 2 heartbeats.',
+              instructions: 'Tap every 2 color throbs.',
               iconUrl: 'img/TAP_BLUE.png', },
           ],
           timings: []
@@ -62,7 +62,7 @@ export default {
           sequences: [
             { gesture: 'waterdrop',
               sample: 'audio/mp3/water_drop.mp3',
-              instructions: 'Tap every 2 heartbeats.',
+              instructions: 'Tap every 2 color throbs.',
               iconUrl: 'img/TAP_BLUE.png', },
             { gesture: 'flutter',
               sample: 'audio/mp3/electrical_e.mp3',
